@@ -48,15 +48,15 @@ public interface VanesaFormulaListener extends ParseTreeListener {
 	 */
 	void exitExpr(@NotNull VanesaFormulaParser.ExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link VanesaFormulaParser#atom}.
+	 * Enter a parse tree produced by {@link VanesaFormulaParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterAtom(@NotNull VanesaFormulaParser.AtomContext ctx);
+	void enterTerm(@NotNull VanesaFormulaParser.TermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link VanesaFormulaParser#atom}.
+	 * Exit a parse tree produced by {@link VanesaFormulaParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitAtom(@NotNull VanesaFormulaParser.AtomContext ctx);
+	void exitTerm(@NotNull VanesaFormulaParser.TermContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link VanesaFormulaParser#neg_variable}.
 	 * @param ctx the parse tree
@@ -67,14 +67,4 @@ public interface VanesaFormulaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link VanesaFormulaParser#additive}.
-	 * @param ctx the parse tree
-	 */
-	void enterAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link VanesaFormulaParser#additive}.
-	 * @param ctx the parse tree
-	 */
-	void exitAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx);
 }

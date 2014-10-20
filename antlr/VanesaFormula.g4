@@ -12,23 +12,23 @@ RPAREN : ')' ;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-expr				: additive ;
+expr				: term ;
 
-additive			: multiplicative ( ( PLUS | MINUS ) multiplicative )* ;
-
-multiplicative	: power ( ( MULT | DIV ) power )* ;
-
-power				: function ( POW function )* ;
-
-// MULTIPLE ARGUMENTS??
-function			: atom
-					| variable LPAREN atom RPAREN ;
- 
-atom				: number
+term				:
+					LPAREN term RPAREN
+					| number
 					| neg_number
 					| variable
 					| neg_variable
-					| LPAREN additive RPAREN;
+					// function MULTIPLE ARGUMENTS??
+					| variable LPAREN term RPAREN
+					// power
+					| left=term op=POW right=term
+					// multiplicative
+					| left=term op=( MULT | DIV ) right=term
+					// additive
+					| left=term op=( PLUS | MINUS ) right=term
+					;
 
 number			: NUMBER ;
 

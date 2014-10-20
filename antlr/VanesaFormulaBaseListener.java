@@ -64,13 +64,13 @@ public class VanesaFormulaBaseListener implements VanesaFormulaListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
+	@Override public void enterTerm(@NotNull VanesaFormulaParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
+	@Override public void exitTerm(@NotNull VanesaFormulaParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -83,18 +83,6 @@ public class VanesaFormulaBaseListener implements VanesaFormulaListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
