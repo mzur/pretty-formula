@@ -1,4 +1,4 @@
-// Generated from vanesa_formula.g4 by ANTLR 4.4
+// Generated from VanesaFormula.g4 by ANTLR 4.4
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -6,95 +6,95 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link vanesa_formulaListener},
+ * This class provides an empty implementation of {@link VanesaFormulaListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class vanesa_formulaBaseListener implements vanesa_formulaListener {
+public class VanesaFormulaBaseListener implements VanesaFormulaListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumber(@NotNull vanesa_formulaParser.NumberContext ctx) { }
+	@Override public void enterNumber(@NotNull VanesaFormulaParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumber(@NotNull vanesa_formulaParser.NumberContext ctx) { }
+	@Override public void exitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariable(@NotNull vanesa_formulaParser.VariableContext ctx) { }
+	@Override public void enterNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariable(@NotNull vanesa_formulaParser.VariableContext ctx) { }
+	@Override public void exitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(@NotNull vanesa_formulaParser.ExprContext ctx) { }
+	@Override public void enterVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(@NotNull vanesa_formulaParser.ExprContext ctx) { }
+	@Override public void exitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTerm(@NotNull vanesa_formulaParser.TermContext ctx) { }
+	@Override public void enterExpr(@NotNull VanesaFormulaParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTerm(@NotNull vanesa_formulaParser.TermContext ctx) { }
+	@Override public void exitExpr(@NotNull VanesaFormulaParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPower(@NotNull vanesa_formulaParser.PowerContext ctx) { }
+	@Override public void enterAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPower(@NotNull vanesa_formulaParser.PowerContext ctx) { }
+	@Override public void exitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactor(@NotNull vanesa_formulaParser.FactorContext ctx) { }
+	@Override public void enterNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactor(@NotNull vanesa_formulaParser.FactorContext ctx) { }
+	@Override public void exitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtom(@NotNull vanesa_formulaParser.AtomContext ctx) { }
+	@Override public void enterAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtom(@NotNull vanesa_formulaParser.AtomContext ctx) { }
+	@Override public void exitAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

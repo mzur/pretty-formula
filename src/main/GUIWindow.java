@@ -64,7 +64,7 @@ public class GUIWindow extends javax.swing.JFrame {
    }// </editor-fold>//GEN-END:initComponents
 
    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-      FormulaRenderer.renderFormula(this.jTextField1.getText(), this.jLabel1);
+      //FormulaRenderer.renderFormula(this.jTextField1.getText(), this.jLabel1);
    }//GEN-LAST:event_jTextField1KeyReleased
 
    // Variables declaration - do not modify//GEN-BEGIN:variables

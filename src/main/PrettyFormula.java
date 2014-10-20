@@ -43,6 +43,8 @@ public class PrettyFormula {
       java.awt.EventQueue.invokeLater(() -> {
          new GUIWindow().setVisible(true);
       });
+      
+      FormulaParser.parse("a * b");
    }
    
 }
