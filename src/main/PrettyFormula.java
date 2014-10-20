@@ -43,8 +43,7 @@ public class PrettyFormula {
       java.awt.EventQueue.invokeLater(() -> {
          new GUIWindow().setVisible(true);
       });
-      
-      FormulaParser.parse("a * b");
+      //System.out.println(FormulaParser.parse("(1+2*(-3)^(a+5)^5)/(c_1*(-d)-sqrt(10.5))/abs(x)*(3,1415)"));
    }
    
 }

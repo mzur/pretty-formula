@@ -6,179 +6,65 @@
 
 package main;
 
-import antlr.VanesaFormulaBaseListener;
+import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
-import java.util.ArrayList;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  *
  * @author martin
  */
-public class VanesaFormulaParseRules extends VanesaFormulaBaseListener {
-   
-   private String formula;
-   
-   public VanesaFormulaParseRules() {
-      super();
-      this.formula = "";
-   }
-   
-   public String getFormula() {
-      return this.formula;
-   }
-   
+public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    /**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public void enterNumber(@NotNull VanesaFormulaParser.NumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunction(@NotNull VanesaFormulaParser.FunctionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunction(@NotNull VanesaFormulaParser.FunctionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpr(@NotNull VanesaFormulaParser.ExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr(@NotNull VanesaFormulaParser.ExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMultiplicative(@NotNull VanesaFormulaParser.MultiplicativeContext ctx) {
-     ArrayList<TerminalNode> list = (ArrayList<TerminalNode>) ctx.DIV();
+	@Override public String visitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) {
+      return ctx.getText();
    }
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation does nothing.</p>
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public void exitMultiplicative(@NotNull VanesaFormulaParser.MultiplicativeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPower(@NotNull VanesaFormulaParser.PowerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPower(@NotNull VanesaFormulaParser.PowerContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAdditive(@NotNull VanesaFormulaParser.AdditiveContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitTerminal(@NotNull TerminalNode node) {
-      this.formula += node.getText();
+	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx) {
+      String ret = "";
+      
+      if (ctx.operator() != null) {
+         // OPERATORS
+         switch (ctx.operator().getText()) {
+            case "/":
+               ret = "\\frac{" + visit(ctx.term(0)) + "}{" + visit(ctx.term(1)) + "}";
+               break;
+            case "*":
+               ret = visit(ctx.term(0)) + "\\cdot " + visit(ctx.term(1));
+               break;
+            case "^":
+               ret = visit(ctx.term(0)) + "^{" + visit(ctx.term(1)) + "}";
+               break;
+            default:
+               ret = visit(ctx.term(0)) + ctx.operator().getText() + visit(ctx.term(1));
+         }
+      } else if (ctx.function() != null) {
+        // FUNCTIONS (must be before the term in parentheses)
+        switch (ctx.function().getText()) {
+           case "sqrt":
+              ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
+              break;
+           default:
+              ret = ctx.function().getText() + "(" + visit(ctx.term(0)) + ")";
+              break;
+        }
+      } else if (ctx.LPAREN() != null && ctx.RPAREN() != null) {
+         // TERM IN PARENTHESES
+         ret = "(" + visit(ctx.term(0)) + ")";
+      } else {
+         ret = visitChildren(ctx);
+      }
+      
+      return ret;
    }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
-   
 }

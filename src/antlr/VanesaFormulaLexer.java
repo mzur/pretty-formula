@@ -1,6 +1,5 @@
+// Generated from /media/martin/data/uni/ws1415/pretty-formula/src/antlr/VanesaFormula.g4 by ANTLR 4.4
 package antlr;
-
-// Generated from VanesaFormula.g4 by ANTLR 4.4
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
