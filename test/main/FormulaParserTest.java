@@ -6,12 +6,13 @@
 
 package main;
 
+import java.awt.image.BufferedImage;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -22,55 +23,39 @@ public class FormulaParserTest {
    public FormulaParserTest() {
    }
    
-   @BeforeClass
-   public static void setUpClass() {
-   }
-   
-   @AfterClass
-   public static void tearDownClass() {
-   }
-   
-   @Before
-   public void setUp() {
-   }
-   
-   @After
-   public void tearDown() {
-   }
-
    /**
-    * Test of parse method, of class FormulaParser.
+    * Test of parseToLatex method, of class FormulaParser.
     */
    @Test
-   public void testParse() {
-      System.out.println("parse");
+   public void testParseToLatex() {
+      System.out.println("parseToLatex");
       String formula = "a+b";
       String expResult = "a+b";
-      String result = FormulaParser.parse(formula);
+      String result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "a/b";
       expResult = "\\frac{a}{b}";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "a*b";
       expResult = "a\\cdot b";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "a-b";
       expResult = "a-b";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "a^b";
       expResult = "a^{b}";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "sqrt(a)";
       expResult = "\\sqrt{a}";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
       formula = "(1+2*(-3)^(a+5)^5)/(c_1*(-d)-sqrt(10.5))/abs(x)*(3,1415)";
       expResult = "\\frac{\\frac{(1+2\\cdot (-3)^{(a+5)}^{5})}{(c_1\\cdot (-d)-\\sqrt{10.5})}}{abs(x)}\\cdot (3,1415)";
-      result = FormulaParser.parse(formula);
+      result = FormulaParser.parseToLatex(formula);
       assertEquals(expResult, result);
    }
    

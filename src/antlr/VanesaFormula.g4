@@ -20,7 +20,7 @@ RPAREN : ')' ;
 
 expr				: term ;
 
-term				:LPAREN term RPAREN
+term				: LPAREN term RPAREN
 					| atom
 					// function MULTIPLE ARGUMENTS??
 					| function LPAREN term RPAREN

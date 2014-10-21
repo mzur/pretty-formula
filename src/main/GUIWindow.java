@@ -6,6 +6,11 @@
 
 package main;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import org.scilab.forge.jlatexmath.ParseException;
+
 /**
  *
  * @author martin
@@ -30,6 +35,7 @@ public class GUIWindow extends javax.swing.JFrame {
 
       jTextField1 = new javax.swing.JTextField();
       jLabel1 = new javax.swing.JLabel();
+      jLabel2 = new javax.swing.JLabel();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +53,8 @@ public class GUIWindow extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+               .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+               .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
       );
       layout.setVerticalGroup(
@@ -56,8 +63,10 @@ public class GUIWindow extends javax.swing.JFrame {
             .addContainerGap()
             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
       pack();
@@ -65,11 +74,23 @@ public class GUIWindow extends javax.swing.JFrame {
 
    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
       //FormulaRenderer.renderFormula(this.jTextField1.getText(), this.jLabel1);
-      this.jLabel1.setText(FormulaParser.parse(this.jTextField1.getText()));
+      this.jLabel1.setText(FormulaParser.parseToLatex(this.jTextField1.getText()));
+
+      try {
+         Graphics g = this.jLabel2.getGraphics();
+         BufferedImage image = FormulaParser.parseToImage(this.jTextField1.getText());
+         g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
+         g.drawImage(image, 0, 0, null);
+         this.jTextField1.setForeground(Color.black);
+      } catch (ParseException e) {
+         e.printStackTrace();
+         this.jTextField1.setForeground(Color.red);
+      }
    }//GEN-LAST:event_jTextField1KeyReleased
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
+   private javax.swing.JLabel jLabel2;
    private javax.swing.JTextField jTextField1;
    // End of variables declaration//GEN-END:variables
 }

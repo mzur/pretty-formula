@@ -20,6 +20,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
+    * @param ctx Atom node context.
+    * @return Returns the text of the atom node.
 	 */
 	@Override public String visitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) {
       return ctx.getText();
@@ -29,12 +31,15 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
+    * @param ctx Term node context.
+    * @return Returns the formula string of the term node (including all its children)
+    * formatted according to the rules specified in this function.
 	 */
 	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx) {
-      String ret = "";
+      String ret;
       
+      // OPERATORS
       if (ctx.operator() != null) {
-         // OPERATORS
          switch (ctx.operator().getText()) {
             case "/":
                ret = "\\frac{" + visit(ctx.term(0)) + "}{" + visit(ctx.term(1)) + "}";
@@ -48,8 +53,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
             default:
                ret = visit(ctx.term(0)) + ctx.operator().getText() + visit(ctx.term(1));
          }
+      // FUNCTIONS (must be before the term in parentheses)
       } else if (ctx.function() != null) {
-        // FUNCTIONS (must be before the term in parentheses)
         switch (ctx.function().getText()) {
            case "sqrt":
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
@@ -58,8 +63,14 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
               ret = ctx.function().getText() + "(" + visit(ctx.term(0)) + ")";
               break;
         }
+      // TERM IN PARENTHESES
       } else if (ctx.LPAREN() != null && ctx.RPAREN() != null) {
-         // TERM IN PARENTHESES
+         /*
+          * Usually the parentheses could be ommitted here but that would lead
+          * to falsy behaviour in cases like "(a+b)^c" which would be parsed to
+          * "a+b^{c}". Like this there are lots of parentheses in the formula
+          * but it is always correct.
+          */
          ret = "(" + visit(ctx.term(0)) + ")";
       } else {
          ret = visitChildren(ctx);
