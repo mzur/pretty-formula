@@ -8,6 +8,8 @@ package main;
 
 import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
+import antlr.VanesaFormulaParser.TermContext;
+import java.util.InputMismatchException;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -90,10 +92,17 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
       } else if (ctx.function() != null) {
         switch (ctx.function().getText()) {
            case "sqrt":
+              if (ctx.term().size() > 1) {
+                 throw new InputMismatchException("Square root must not have multiple arguments.");
+              }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;
            default:
-              ret = ctx.function().getText() + "(" + visit(ctx.term(0)) + ")";
+              ret = ctx.function().getText() + "(";
+              for (TermContext term : ctx.term()) {
+                 ret += visit(term) + ',';
+              }
+              ret = ret.substring(0, ret.length() - 1) + ')';
               break;
         }
       // TERM IN PARENTHESES

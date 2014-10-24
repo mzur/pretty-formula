@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
+import java.util.InputMismatchException;
 import javax.swing.JLabel;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -30,7 +31,7 @@ public class FormulaParser {
    
    private FormulaParser() { }
    
-   public static BufferedImage parseToImage(String formula) throws ParseException {
+   public static BufferedImage parseToImage(String formula) throws ParseException, InputMismatchException {
       TeXFormula latexFormula
               = new TeXFormula(FormulaParser.parseToLatex(formula));
 
@@ -53,7 +54,7 @@ public class FormulaParser {
       return image;
    }
 
-   public static String parseToLatex(String formula) {
+   public static String parseToLatex(String formula) throws InputMismatchException {
       VanesaFormulaLexer lexer = new VanesaFormulaLexer(new ANTLRInputStream(formula));
       CommonTokenStream tokens = new CommonTokenStream(lexer);
       VanesaFormulaParser parser = new VanesaFormulaParser(tokens);

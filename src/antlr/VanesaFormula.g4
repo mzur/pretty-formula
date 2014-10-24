@@ -24,7 +24,7 @@ expr				: term ;
 term				: LPAREN term RPAREN
 					| atom
 					// function MULTIPLE ARGUMENTS??
-					| function LPAREN term RPAREN
+					| function LPAREN term ( ',' term )* RPAREN
                | term operator=( POW | MULT | DIV ) term
 					| term operator=( PLUS | MINUS ) term
 					;

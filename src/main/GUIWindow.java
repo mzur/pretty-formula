@@ -9,6 +9,7 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.InputMismatchException;
 import org.scilab.forge.jlatexmath.ParseException;
 
 /**
@@ -22,6 +23,7 @@ public class GUIWindow extends javax.swing.JFrame {
     */
    public GUIWindow() {
       initComponents();
+      
    }
 
    /**
@@ -45,6 +47,8 @@ public class GUIWindow extends javax.swing.JFrame {
          }
       });
 
+      jLabel1.setForeground(new java.awt.Color(176, 1, 1));
+
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
       getContentPane().setLayout(layout);
       layout.setHorizontalGroup(
@@ -62,28 +66,28 @@ public class GUIWindow extends javax.swing.JFrame {
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+            .addContainerGap())
       );
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-      //FormulaRenderer.renderFormula(this.jTextField1.getText(), this.jLabel1);
-      this.jLabel1.setText(FormulaParser.parseToLatex(this.jTextField1.getText()));
-
+      this.jLabel1.setText("");
+      
       try {
          Graphics g = this.jLabel2.getGraphics();
          BufferedImage image = FormulaParser.parseToImage(this.jTextField1.getText());
          g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
          g.drawImage(image, 0, 0, null);
          this.jTextField1.setForeground(Color.black);
-      } catch (ParseException e) {
-         e.printStackTrace();
+      } catch (ParseException | InputMismatchException e) {
+         this.jLabel1.setText(e.getMessage());
+         this.jTextField1.setForeground(new Color(176, 1, 1));
       }
    }//GEN-LAST:event_jTextField1KeyReleased
 

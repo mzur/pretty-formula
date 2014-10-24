@@ -6,6 +6,7 @@
 
 package main;
 
+import java.util.InputMismatchException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -68,10 +69,24 @@ public class FormulaParserTest {
       this.doTest();
    }
    
+   @Test(expected = InputMismatchException.class)
+   public void testSqrtMultipleArguments() {
+      this.formula = "sqrt(a,b,c)";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
    @Test
    public void testFunction() {
       this.formula = "func(a)";
       this.expResult = "func(a)";
+      this.doTest();
+   }
+   
+   @Test
+   public void testFunctionMultipleParameters() {
+      this.formula = "func(a,b,c)";
+      this.expResult = "func(a,b,c)";
       this.doTest();
    }
    
