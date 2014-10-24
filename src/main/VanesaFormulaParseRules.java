@@ -9,6 +9,7 @@ package main;
 import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  *
@@ -20,12 +21,44 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
-    * @param ctx Atom node context.
-    * @return Returns the text of the atom node.
 	 */
-	@Override public String visitAtom(@NotNull VanesaFormulaParser.AtomContext ctx) {
+	@Override public String visitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) {
       return ctx.getText();
    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
+      return ctx.getText(); 
+   }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public String visitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { 
+      if (ctx.LODASH().isEmpty()) {
+         return ctx.getText();
+      } else {
+         String re = "";
+         // encapsulate subscript in {} so it works for whole words, too
+         for (TerminalNode variable : ctx.VARIABLE()) {
+            re += "{" + variable.getText() + "}_";
+         }
+         return re.substring(0, re.length() - 1);
+      }
+   }
+   /**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -11,6 +11,7 @@ MINUS  : '-' ;
 MULT   : '*' ;
 DIV    : '/' ;
 POW    : '^' ;
+LODASH : '_' ;
 LPAREN : '(' ;
 RPAREN : ')' ;
 
@@ -36,11 +37,11 @@ atom           : number
 
 number			: NUMBER ;
 
-neg_number		: LPAREN MINUS NUMBER RPAREN ;
+neg_number		: LPAREN MINUS number RPAREN ;
 
-variable			: VARIABLE ;
+variable			: VARIABLE ( LODASH VARIABLE )*;
 
-neg_variable	: LPAREN MINUS VARIABLE RPAREN ;
+neg_variable	: LPAREN MINUS variable RPAREN ;
 
 function       : VARIABLE ;
  
@@ -56,4 +57,4 @@ WS       : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
  
 DIGIT    : [0-9] ;
 
-CHAR     : [a-zA-Z_0-9] ;
+CHAR     : [a-zA-Z0-9] ;
