@@ -24,10 +24,9 @@ term				: LPAREN term RPAREN
 					| atom
 					// function MULTIPLE ARGUMENTS??
 					| function LPAREN term RPAREN
-					| term operator term
+               | term operator=( POW | MULT | DIV ) term
+					| term operator=( PLUS | MINUS ) term
 					;
-
-operator       : ( PLUS | MINUS | MULT | DIV | POW ) ;
 
 atom           : number
                | neg_number

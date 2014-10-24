@@ -59,10 +59,4 @@ public interface VanesaFormulaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link VanesaFormulaParser#operator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOperator(@NotNull VanesaFormulaParser.OperatorContext ctx);
 }

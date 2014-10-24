@@ -68,11 +68,4 @@ public class VanesaFormulaBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitOperator(@NotNull VanesaFormulaParser.OperatorContext ctx) { return visitChildren(ctx); }
 }

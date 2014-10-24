@@ -84,7 +84,6 @@ public class GUIWindow extends javax.swing.JFrame {
          this.jTextField1.setForeground(Color.black);
       } catch (ParseException e) {
          e.printStackTrace();
-         this.jTextField1.setForeground(Color.red);
       }
    }//GEN-LAST:event_jTextField1KeyReleased
 

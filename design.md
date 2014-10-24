@@ -1,23 +1,11 @@
-Packages:
+Fehler:
 
-antlr: mit ANTLR Klassen
+- Klammern werden nicht entfernt bei (term), damit es immer korrekt bleibt.
 
-evtl. rules?
+- a+b/c wird zu (a+b)/c und nicht a+(b/c)
 
-main: Rest
-
-Architektur:
-
-main.java
-gui.java
-FormulaParser.java
-FormulRaule.java
-
-ANTLR generieren:
-
-1. java -jar antlr-4.4-complete.jar Formula.g4
-2. java Dateien in antlr Package kopieren
-3. Package der java Dateien anpassen
+- K_m_Pyruvat wird falsch übersetzt. Sollte K_{m}_{Pyruvat} werden.
+  (genau wie K^{a}^{b+c})
 
 Regeln:
 
@@ -25,10 +13,7 @@ Regeln:
 
 - (a)/(b) -> \frac{a}{b}
 
-Problem: Was tun bei (a)/(b)/(c)... ??
-Eigentlich dann \frac{\frac{a}{b}}{c}...
-
-- a*b     -> a\cdot b (oder lieber "ab"?)
+- a*b     -> a\cdot b
 
 - a^b     -> a^{b}
 

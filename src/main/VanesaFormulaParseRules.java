@@ -39,8 +39,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
       String ret;
       
       // OPERATORS
-      if (ctx.operator() != null) {
-         switch (ctx.operator().getText()) {
+      if (ctx.operator != null) {
+         switch (ctx.operator.getText()) {
             case "/":
                ret = "\\frac{" + visit(ctx.term(0)) + "}{" + visit(ctx.term(1)) + "}";
                break;
@@ -51,7 +51,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
                ret = visit(ctx.term(0)) + "^{" + visit(ctx.term(1)) + "}";
                break;
             default:
-               ret = visit(ctx.term(0)) + ctx.operator().getText() + visit(ctx.term(1));
+               ret = visit(ctx.term(0)) + ctx.operator.getText() + visit(ctx.term(1));
          }
       // FUNCTIONS (must be before the term in parentheses)
       } else if (ctx.function() != null) {
