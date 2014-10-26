@@ -91,9 +91,16 @@ public class FormulaParserTest {
    }
    
    @Test
-   public void testPriority() {
+   public void testPriorityPlusFrac() {
       this.formula = "a+b/c";
       this.expResult = "a+\\frac{b}{c}";
+      this.doTest();
+   }
+   
+   @Test
+   public void testPriorityFracPow() {
+      this.formula = "a/b^c";
+      this.expResult = "\\frac{a}{b^{c}}";
       this.doTest();
    }
    

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 grammar VanesaFormula;
 
 PLUS   : '+' ;
@@ -23,9 +17,10 @@ expr				: term ;
 
 term				: LPAREN term RPAREN
 					| atom
-					// function MULTIPLE ARGUMENTS??
 					| function LPAREN term ( ',' term )* RPAREN
-               | term operator=( POW | MULT | DIV ) term
+               // ordering is important for correct parsing!
+               | term operator=POW term
+               | term operator=( MULT | DIV ) term
 					| term operator=( PLUS | MINUS ) term
 					;
 
