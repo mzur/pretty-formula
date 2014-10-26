@@ -8,9 +8,7 @@ package main;
 
 import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
-import antlr.VanesaFormulaParser.TermContext;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**

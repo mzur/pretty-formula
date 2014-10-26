@@ -9,12 +9,8 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.scilab.forge.jlatexmath.ParseException;
 
 /**
  *
@@ -54,6 +50,9 @@ public class GUIWindow extends javax.swing.JFrame {
          public void keyReleased(java.awt.event.KeyEvent evt) {
             jTextPane1KeyReleased(evt);
          }
+         public void keyTyped(java.awt.event.KeyEvent evt) {
+            jTextPane1KeyTyped(evt);
+         }
       });
       jScrollPane1.setViewportView(jTextPane1);
 
@@ -84,18 +83,23 @@ public class GUIWindow extends javax.swing.JFrame {
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
+   private void jTextPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyTyped
+      // disallow multiple lines
+      String formula = this.jTextPane1.getText();
+      if (formula.contains("\n")) {
+         this.jTextPane1.setText(formula.replace("\n", ""));
+      }
+   }//GEN-LAST:event_jTextPane1KeyTyped
+
    private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
       this.jLabel1.setText("");
       Graphics g = this.jLabel2.getGraphics();
       g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
-      //this.jTextPane1.setText(this.jTextPane1.getText().replace("\\n", ""));
+      this.jTextPane1.getHighlighter().removeAllHighlights();
       
       try {
          BufferedImage image = FormulaParser.parseToImage(this.jTextPane1.getText());
          g.drawImage(image, 0, 0, null);
-         
-         // reset highlights when parsing was successful
-         this.jTextPane1.getHighlighter().removeAllHighlights();
          
       } catch (DetailedParseCancellationException e) {
         

@@ -68,6 +68,7 @@
         <Component class="javax.swing.JTextPane" name="jTextPane1">
           <Events>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextPane1KeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextPane1KeyTyped"/>
           </Events>
         </Component>
       </SubComponents>
