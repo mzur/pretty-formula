@@ -9,7 +9,11 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.InputMismatchException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.scilab.forge.jlatexmath.ParseException;
 
 /**
@@ -17,13 +21,15 @@ import org.scilab.forge.jlatexmath.ParseException;
  * @author martin
  */
 public class GUIWindow extends javax.swing.JFrame {
+   
+   private DefaultHighlightPainter errorHighlighter;
 
    /**
     * Creates new form GUIWindow
     */
    public GUIWindow() {
       initComponents();
-      
+      this.errorHighlighter = new DefaultHighlightPainter(Color.red);
    }
 
    /**
@@ -35,19 +41,21 @@ public class GUIWindow extends javax.swing.JFrame {
    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
    private void initComponents() {
 
-      jTextField1 = new javax.swing.JTextField();
       jLabel1 = new javax.swing.JLabel();
       jLabel2 = new javax.swing.JLabel();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jTextPane1 = new javax.swing.JTextPane();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-      jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+      jLabel1.setForeground(new java.awt.Color(176, 1, 1));
+
+      jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
          public void keyReleased(java.awt.event.KeyEvent evt) {
-            jTextField1KeyReleased(evt);
+            jTextPane1KeyReleased(evt);
          }
       });
-
-      jLabel1.setForeground(new java.awt.Color(176, 1, 1));
+      jScrollPane1.setViewportView(jTextPane1);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
       getContentPane().setLayout(layout);
@@ -57,16 +65,16 @@ public class GUIWindow extends javax.swing.JFrame {
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
-               .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
             .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(7, 7, 7)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
@@ -76,24 +84,37 @@ public class GUIWindow extends javax.swing.JFrame {
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
-   private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+   private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
       this.jLabel1.setText("");
+      Graphics g = this.jLabel2.getGraphics();
+      g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
+      //this.jTextPane1.setText(this.jTextPane1.getText().replace("\\n", ""));
       
       try {
-         Graphics g = this.jLabel2.getGraphics();
-         BufferedImage image = FormulaParser.parseToImage(this.jTextField1.getText());
-         g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
+         BufferedImage image = FormulaParser.parseToImage(this.jTextPane1.getText());
          g.drawImage(image, 0, 0, null);
-         this.jTextField1.setForeground(Color.black);
-      } catch (ParseException | InputMismatchException e) {
+         
+         // reset highlights when parsing was successful
+         this.jTextPane1.getHighlighter().removeAllHighlights();
+         
+      } catch (DetailedParseCancellationException e) {
+        
+         try {
+            this.jTextPane1.getHighlighter().addHighlight(e.getCharPositionInLine(), e.getCharPositionInLine() + 1, this.errorHighlighter);
+         } catch (BadLocationException ex) {
+            // simply don't highlight
+         }
+         
          this.jLabel1.setText(e.getMessage());
-         this.jTextField1.setForeground(new Color(176, 1, 1));
+      } catch (ParseCancellationException e) {
+         this.jLabel1.setText(e.getMessage());
       }
-   }//GEN-LAST:event_jTextField1KeyReleased
+   }//GEN-LAST:event_jTextPane1KeyReleased
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
-   private javax.swing.JTextField jTextField1;
+   private javax.swing.JScrollPane jScrollPane1;
+   private javax.swing.JTextPane jTextPane1;
    // End of variables declaration//GEN-END:variables
 }

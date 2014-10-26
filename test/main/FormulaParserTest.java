@@ -6,7 +6,7 @@
 
 package main;
 
-import java.util.InputMismatchException;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -69,9 +69,30 @@ public class FormulaParserTest {
       this.doTest();
    }
    
-   @Test(expected = InputMismatchException.class)
+   @Test(expected = ParseCancellationException.class)
    public void testSqrtMultipleArguments() {
       this.formula = "sqrt(a,b,c)";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testNoViableAlternativeException() {
+      this.formula = "a+";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testMissingToken() {
+      this.formula = "(a+b";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testUnwantedToken() {
+      this.formula = "a-a)";
       this.expResult = "the exception is thrown";
       this.doTest();
    }

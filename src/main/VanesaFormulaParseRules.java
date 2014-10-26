@@ -9,8 +9,8 @@ package main;
 import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
 import antlr.VanesaFormulaParser.TermContext;
-import java.util.InputMismatchException;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
@@ -93,7 +93,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
         switch (ctx.function().getText()) {
            case "sqrt":
               if (ctx.term().size() > 1) {
-                 throw new InputMismatchException("Square root must not have multiple arguments.");
+                 throw new ParseCancellationException("Square root must not have multiple arguments.");
               }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;

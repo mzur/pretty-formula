@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
-import java.util.InputMismatchException;
 import javax.swing.JLabel;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,11 +26,12 @@ import org.scilab.forge.jlatexmath.TeXIcon;
  * @author martin
  */
 public class FormulaParser {
-   private static final VanesaFormulaParseRules extractor = new VanesaFormulaParseRules();
-   
+   private static final VanesaFormulaParseRules EXTRACTOR = new VanesaFormulaParseRules();
+
    private FormulaParser() { }
    
-   public static BufferedImage parseToImage(String formula) throws ParseException, InputMismatchException {
+   public static BufferedImage parseToImage(String formula)
+           throws ParseException, DetailedParseCancellationException {
       TeXFormula latexFormula
               = new TeXFormula(FormulaParser.parseToLatex(formula));
 
@@ -54,13 +54,20 @@ public class FormulaParser {
       return image;
    }
 
-   public static String parseToLatex(String formula) throws InputMismatchException {
+   public static String parseToLatex(String formula) throws DetailedParseCancellationException {
       VanesaFormulaLexer lexer = new VanesaFormulaLexer(new ANTLRInputStream(formula));
+      lexer.removeErrorListeners();
+      lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+
       CommonTokenStream tokens = new CommonTokenStream(lexer);
+
       VanesaFormulaParser parser = new VanesaFormulaParser(tokens);
-      
+      parser.removeErrorListeners();
+      parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+
       ParserRuleContext tree = parser.expr();
-      
-      return FormulaParser.extractor.visit(tree);
+
+      return FormulaParser.EXTRACTOR.visit(tree);
    }
+
 }
