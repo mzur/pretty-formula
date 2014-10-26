@@ -69,7 +69,7 @@ public class FormulaParserTest {
       this.doTest();
    }
    
-   @Test(expected = ParseCancellationException.class)
+   @Test(expected = DetailedParseCancellationException.class)
    public void testSqrtMultipleArguments() {
       this.formula = "sqrt(a,b,c)";
       this.expResult = "the exception is thrown";

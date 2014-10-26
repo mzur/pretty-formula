@@ -100,13 +100,11 @@ public class GUIWindow extends javax.swing.JFrame {
       } catch (DetailedParseCancellationException e) {
         
          try {
-            this.jTextPane1.getHighlighter().addHighlight(e.getCharPositionInLine(), e.getCharPositionInLine() + 1, this.errorHighlighter);
+            this.jTextPane1.getHighlighter().addHighlight(e.getCharPositionInLine(), e.getEndCharPositionInLine(), this.errorHighlighter);
          } catch (BadLocationException ex) {
             // simply don't highlight
          }
          
-         this.jLabel1.setText(e.getMessage());
-      } catch (ParseCancellationException e) {
          this.jLabel1.setText(e.getMessage());
       }
    }//GEN-LAST:event_jTextPane1KeyReleased

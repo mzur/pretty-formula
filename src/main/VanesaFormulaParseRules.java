@@ -70,7 +70,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
     * @return Returns the formula string of the term node (including all its children)
     * formatted according to the rules specified in this function.
 	 */
-	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx) {
+	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx) throws DetailedParseCancellationException {
       String ret;
       
       // OPERATORS
@@ -93,15 +93,13 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
         switch (ctx.function().getText()) {
            case "sqrt":
               if (ctx.term().size() > 1) {
-                 throw new ParseCancellationException("Square root must not have multiple arguments.");
+                 throw new DetailedParseCancellationException("Square root must not have multiple arguments.", ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), ctx.getStop().getCharPositionInLine());
               }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;
            default:
               ret = ctx.function().getText() + "(";
-              for (TermContext term : ctx.term()) {
-                 ret += visit(term) + ',';
-              }
+              ret = ctx.term().stream().map((term) -> visit(term) + ',').reduce(ret, String::concat);
               ret = ret.substring(0, ret.length() - 1) + ')';
               break;
         }
