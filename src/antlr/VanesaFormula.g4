@@ -8,6 +8,7 @@ POW    : '^' ;
 LODASH : '_' ;
 LPAREN : '(' ;
 RPAREN : ')' ;
+COMMA  : ',' ;
 
 /*------------------------------------------------------------------
  * PARSER RULES
@@ -17,10 +18,11 @@ expr				: term ;
 
 term				: LPAREN term RPAREN
 					| atom
-					| function LPAREN term ( ',' term )* RPAREN
+					| function LPAREN term ( COMMA term )* RPAREN
                // ordering is important for correct parsing!
                | term operator=POW term
-               | term operator=( MULT | DIV ) term
+               | term operator=DIV term
+               | term operator=MULT term
 					| term operator=( PLUS | MINUS ) term
 					;
 

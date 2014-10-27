@@ -17,10 +17,10 @@ public class VanesaFormulaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, PLUS=2, MINUS=3, MULT=4, DIV=5, POW=6, LODASH=7, LPAREN=8, RPAREN=9, 
+		PLUS=1, MINUS=2, MULT=3, DIV=4, POW=5, LODASH=6, LPAREN=7, RPAREN=8, COMMA=9, 
 		NUMBER=10, VARIABLE=11, WS=12, DIGIT=13, CHAR=14;
 	public static final String[] tokenNames = {
-		"<INVALID>", "','", "'+'", "'-'", "'*'", "'/'", "'^'", "'_'", "'('", "')'", 
+		"<INVALID>", "'+'", "'-'", "'*'", "'/'", "'^'", "'_'", "'('", "')'", "','", 
 		"NUMBER", "VARIABLE", "WS", "DIGIT", "CHAR"
 	};
 	public static final int
@@ -93,9 +93,13 @@ public class VanesaFormulaParser extends Parser {
 		public TermContext term(int i) {
 			return getRuleContext(TermContext.class,i);
 		}
-		public TerminalNode LPAREN() { return getToken(VanesaFormulaParser.LPAREN, 0); }
 		public TerminalNode MULT() { return getToken(VanesaFormulaParser.MULT, 0); }
 		public TerminalNode RPAREN() { return getToken(VanesaFormulaParser.RPAREN, 0); }
+		public TerminalNode COMMA(int i) {
+			return getToken(VanesaFormulaParser.COMMA, i);
+		}
+		public TerminalNode LPAREN() { return getToken(VanesaFormulaParser.LPAREN, 0); }
+		public List<TerminalNode> COMMA() { return getTokens(VanesaFormulaParser.COMMA); }
 		public TerminalNode PLUS() { return getToken(VanesaFormulaParser.PLUS, 0); }
 		public TerminalNode MINUS() { return getToken(VanesaFormulaParser.MINUS, 0); }
 		public AtomContext atom() {
@@ -155,10 +159,10 @@ public class VanesaFormulaParser extends Parser {
 				setState(31);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__0) {
+				while (_la==COMMA) {
 					{
 					{
-					setState(27); match(T__0);
+					setState(27); match(COMMA);
 					setState(28); term(0);
 					}
 					}
@@ -171,7 +175,7 @@ public class VanesaFormulaParser extends Parser {
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(49);
+			setState(52);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -179,16 +183,16 @@ public class VanesaFormulaParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(47);
+					setState(50);
 					switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 					case 1:
 						{
 						_localctx = new TermContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
 						setState(38);
-						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(39); ((TermContext)_localctx).operator = match(POW);
-						setState(40); term(4);
+						setState(40); term(5);
 						}
 						break;
 					case 2:
@@ -196,15 +200,9 @@ public class VanesaFormulaParser extends Parser {
 						_localctx = new TermContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
 						setState(41);
-						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(42);
-						((TermContext)_localctx).operator = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==MULT || _la==DIV) ) {
-							((TermContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
-						}
-						consume();
-						setState(43); term(3);
+						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(42); ((TermContext)_localctx).operator = match(DIV);
+						setState(43); term(4);
 						}
 						break;
 					case 3:
@@ -212,21 +210,31 @@ public class VanesaFormulaParser extends Parser {
 						_localctx = new TermContext(_parentctx, _parentState);
 						pushNewRecursionContext(_localctx, _startState, RULE_term);
 						setState(44);
+						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
+						setState(45); ((TermContext)_localctx).operator = match(MULT);
+						setState(46); term(3);
+						}
+						break;
+					case 4:
+						{
+						_localctx = new TermContext(_parentctx, _parentState);
+						pushNewRecursionContext(_localctx, _startState, RULE_term);
+						setState(47);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(45);
+						setState(48);
 						((TermContext)_localctx).operator = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==PLUS || _la==MINUS) ) {
 							((TermContext)_localctx).operator = (Token)_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(46); term(2);
+						setState(49); term(2);
 						}
 						break;
 					}
 					} 
 				}
-				setState(51);
+				setState(54);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
 			}
@@ -271,30 +279,30 @@ public class VanesaFormulaParser extends Parser {
 		AtomContext _localctx = new AtomContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_atom);
 		try {
-			setState(56);
+			setState(59);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(52); number();
+				setState(55); number();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(53); neg_number();
+				setState(56); neg_number();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(54); variable();
+				setState(57); variable();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(55); neg_variable();
+				setState(58); neg_variable();
 				}
 				break;
 			}
@@ -329,7 +337,7 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58); match(NUMBER);
+			setState(61); match(NUMBER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -367,10 +375,10 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(60); match(LPAREN);
-			setState(61); match(MINUS);
-			setState(62); number();
-			setState(63); match(RPAREN);
+			setState(63); match(LPAREN);
+			setState(64); match(MINUS);
+			setState(65); number();
+			setState(66); match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -411,20 +419,20 @@ public class VanesaFormulaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65); match(VARIABLE);
-			setState(70);
+			setState(68); match(VARIABLE);
+			setState(73);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(66); match(LODASH);
-					setState(67); match(VARIABLE);
+					setState(69); match(LODASH);
+					setState(70); match(VARIABLE);
 					}
 					} 
 				}
-				setState(72);
+				setState(75);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
@@ -465,10 +473,10 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73); match(LPAREN);
-			setState(74); match(MINUS);
-			setState(75); variable();
-			setState(76); match(RPAREN);
+			setState(76); match(LPAREN);
+			setState(77); match(MINUS);
+			setState(78); variable();
+			setState(79); match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -501,7 +509,7 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78); match(VARIABLE);
+			setState(81); match(VARIABLE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -523,35 +531,36 @@ public class VanesaFormulaParser extends Parser {
 	}
 	private boolean term_sempred(TermContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0: return precpred(_ctx, 3);
-		case 1: return precpred(_ctx, 2);
-		case 2: return precpred(_ctx, 1);
+		case 0: return precpred(_ctx, 4);
+		case 1: return precpred(_ctx, 3);
+		case 2: return precpred(_ctx, 2);
+		case 3: return precpred(_ctx, 1);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20S\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20V\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3 \n\3\f\3\16\3#\13\3\3\3\3\3\5\3\'"+
-		"\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\62\n\3\f\3\16\3\65\13\3\3"+
-		"\4\3\4\3\4\3\4\5\4;\n\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\7\7G\n"+
-		"\7\f\7\16\7J\13\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\3\4\n\2\4\6\b\n\f"+
-		"\16\20\2\4\3\2\6\7\3\2\4\5T\2\22\3\2\2\2\4&\3\2\2\2\6:\3\2\2\2\b<\3\2"+
-		"\2\2\n>\3\2\2\2\fC\3\2\2\2\16K\3\2\2\2\20P\3\2\2\2\22\23\5\4\3\2\23\3"+
-		"\3\2\2\2\24\25\b\3\1\2\25\26\7\n\2\2\26\27\5\4\3\2\27\30\7\13\2\2\30\'"+
-		"\3\2\2\2\31\'\5\6\4\2\32\33\5\20\t\2\33\34\7\n\2\2\34!\5\4\3\2\35\36\7"+
-		"\3\2\2\36 \5\4\3\2\37\35\3\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"$\3"+
-		"\2\2\2#!\3\2\2\2$%\7\13\2\2%\'\3\2\2\2&\24\3\2\2\2&\31\3\2\2\2&\32\3\2"+
-		"\2\2\'\63\3\2\2\2()\f\5\2\2)*\7\b\2\2*\62\5\4\3\6+,\f\4\2\2,-\t\2\2\2"+
-		"-\62\5\4\3\5./\f\3\2\2/\60\t\3\2\2\60\62\5\4\3\4\61(\3\2\2\2\61+\3\2\2"+
-		"\2\61.\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\5\3\2\2\2"+
-		"\65\63\3\2\2\2\66;\5\b\5\2\67;\5\n\6\28;\5\f\7\29;\5\16\b\2:\66\3\2\2"+
-		"\2:\67\3\2\2\2:8\3\2\2\2:9\3\2\2\2;\7\3\2\2\2<=\7\f\2\2=\t\3\2\2\2>?\7"+
-		"\n\2\2?@\7\5\2\2@A\5\b\5\2AB\7\13\2\2B\13\3\2\2\2CH\7\r\2\2DE\7\t\2\2"+
-		"EG\7\r\2\2FD\3\2\2\2GJ\3\2\2\2HF\3\2\2\2HI\3\2\2\2I\r\3\2\2\2JH\3\2\2"+
-		"\2KL\7\n\2\2LM\7\5\2\2MN\5\f\7\2NO\7\13\2\2O\17\3\2\2\2PQ\7\r\2\2Q\21"+
-		"\3\2\2\2\b!&\61\63:H";
+		"\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\65\n\3\f\3\16"+
+		"\38\13\3\3\4\3\4\3\4\3\4\5\4>\n\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7"+
+		"\3\7\7\7J\n\7\f\7\16\7M\13\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\3\4\n\2"+
+		"\4\6\b\n\f\16\20\2\3\3\2\3\4X\2\22\3\2\2\2\4&\3\2\2\2\6=\3\2\2\2\b?\3"+
+		"\2\2\2\nA\3\2\2\2\fF\3\2\2\2\16N\3\2\2\2\20S\3\2\2\2\22\23\5\4\3\2\23"+
+		"\3\3\2\2\2\24\25\b\3\1\2\25\26\7\t\2\2\26\27\5\4\3\2\27\30\7\n\2\2\30"+
+		"\'\3\2\2\2\31\'\5\6\4\2\32\33\5\20\t\2\33\34\7\t\2\2\34!\5\4\3\2\35\36"+
+		"\7\13\2\2\36 \5\4\3\2\37\35\3\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\""+
+		"$\3\2\2\2#!\3\2\2\2$%\7\n\2\2%\'\3\2\2\2&\24\3\2\2\2&\31\3\2\2\2&\32\3"+
+		"\2\2\2\'\66\3\2\2\2()\f\6\2\2)*\7\7\2\2*\65\5\4\3\7+,\f\5\2\2,-\7\6\2"+
+		"\2-\65\5\4\3\6./\f\4\2\2/\60\7\5\2\2\60\65\5\4\3\5\61\62\f\3\2\2\62\63"+
+		"\t\2\2\2\63\65\5\4\3\4\64(\3\2\2\2\64+\3\2\2\2\64.\3\2\2\2\64\61\3\2\2"+
+		"\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67\5\3\2\2\28\66\3\2\2\29>"+
+		"\5\b\5\2:>\5\n\6\2;>\5\f\7\2<>\5\16\b\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2"+
+		"=<\3\2\2\2>\7\3\2\2\2?@\7\f\2\2@\t\3\2\2\2AB\7\t\2\2BC\7\4\2\2CD\5\b\5"+
+		"\2DE\7\n\2\2E\13\3\2\2\2FK\7\r\2\2GH\7\b\2\2HJ\7\r\2\2IG\3\2\2\2JM\3\2"+
+		"\2\2KI\3\2\2\2KL\3\2\2\2L\r\3\2\2\2MK\3\2\2\2NO\7\t\2\2OP\7\4\2\2PQ\5"+
+		"\f\7\2QR\7\n\2\2R\17\3\2\2\2ST\7\r\2\2T\21\3\2\2\2\b!&\64\66=K";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

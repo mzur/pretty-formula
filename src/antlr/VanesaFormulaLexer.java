@@ -17,7 +17,7 @@ public class VanesaFormulaLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, PLUS=2, MINUS=3, MULT=4, DIV=5, POW=6, LODASH=7, LPAREN=8, RPAREN=9, 
+		PLUS=1, MINUS=2, MULT=3, DIV=4, POW=5, LODASH=6, LPAREN=7, RPAREN=8, COMMA=9, 
 		NUMBER=10, VARIABLE=11, WS=12, DIGIT=13, CHAR=14;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
@@ -29,7 +29,7 @@ public class VanesaFormulaLexer extends Lexer {
 		"'\r'", "'\\u000E'"
 	};
 	public static final String[] ruleNames = {
-		"T__0", "PLUS", "MINUS", "MULT", "DIV", "POW", "LODASH", "LPAREN", "RPAREN", 
+		"PLUS", "MINUS", "MULT", "DIV", "POW", "LODASH", "LPAREN", "RPAREN", "COMMA", 
 		"NUMBER", "VARIABLE", "WS", "DIGIT", "CHAR"
 	};
 
@@ -70,10 +70,10 @@ public class VanesaFormulaLexer extends Lexer {
 		"\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2"+
 		"\2\2\2\35\3\2\2\2\3\37\3\2\2\2\5!\3\2\2\2\7#\3\2\2\2\t%\3\2\2\2\13\'\3"+
 		"\2\2\2\r)\3\2\2\2\17+\3\2\2\2\21-\3\2\2\2\23/\3\2\2\2\25\62\3\2\2\2\27"+
-		"?\3\2\2\2\31D\3\2\2\2\33J\3\2\2\2\35L\3\2\2\2\37 \7.\2\2 \4\3\2\2\2!\""+
-		"\7-\2\2\"\6\3\2\2\2#$\7/\2\2$\b\3\2\2\2%&\7,\2\2&\n\3\2\2\2\'(\7\61\2"+
-		"\2(\f\3\2\2\2)*\7`\2\2*\16\3\2\2\2+,\7a\2\2,\20\3\2\2\2-.\7*\2\2.\22\3"+
-		"\2\2\2/\60\7+\2\2\60\24\3\2\2\2\61\63\5\33\16\2\62\61\3\2\2\2\63\64\3"+
+		"?\3\2\2\2\31D\3\2\2\2\33J\3\2\2\2\35L\3\2\2\2\37 \7-\2\2 \4\3\2\2\2!\""+
+		"\7/\2\2\"\6\3\2\2\2#$\7,\2\2$\b\3\2\2\2%&\7\61\2\2&\n\3\2\2\2\'(\7`\2"+
+		"\2(\f\3\2\2\2)*\7a\2\2*\16\3\2\2\2+,\7*\2\2,\20\3\2\2\2-.\7+\2\2.\22\3"+
+		"\2\2\2/\60\7.\2\2\60\24\3\2\2\2\61\63\5\33\16\2\62\61\3\2\2\2\63\64\3"+
 		"\2\2\2\64\62\3\2\2\2\64\65\3\2\2\2\65<\3\2\2\2\668\t\2\2\2\679\5\33\16"+
 		"\28\67\3\2\2\29:\3\2\2\2:8\3\2\2\2:;\3\2\2\2;=\3\2\2\2<\66\3\2\2\2<=\3"+
 		"\2\2\2=\26\3\2\2\2>@\5\35\17\2?>\3\2\2\2@A\3\2\2\2A?\3\2\2\2AB\3\2\2\2"+

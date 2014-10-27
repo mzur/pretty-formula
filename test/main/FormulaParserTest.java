@@ -126,6 +126,13 @@ public class FormulaParserTest {
    }
    
    @Test
+   public void testPriorityMultDiv() {
+      this.formula = "a/b*c/e";
+      this.expResult = "\\frac{a}{b}\\cdot \\frac{c}{e}";
+      this.doTest();
+   }
+   
+   @Test
    public void testLodash() {
       this.formula = "a_bc_de_fg";
       this.expResult = "{a}_{bc}_{de}_{fg}";
