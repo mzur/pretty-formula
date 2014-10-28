@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 /**
- *
+ * An ANTLR parse exception that contains additional information like the
+ * exact position of the character(-sequence) that produced the error.
  * @author martin
  */
 public class DetailedParseCancellationException extends ParseCancellationException {

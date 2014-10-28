@@ -6,7 +6,12 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
-
+/**
+ * An ANTLR ErrorListener that throws a custom error instead of logging them
+ * to the console {@link org.antlr.v4.runtime.ConsoleErrorListener} or throwing
+ * a nondescriptive error {@link org.antlr.v4.runtime.BailErrorStrategy}.
+ * @author martin
+ */
 public class ThrowingErrorListener extends BaseErrorListener {
 
    

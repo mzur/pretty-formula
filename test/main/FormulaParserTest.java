@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 import org.antlr.v4.runtime.misc.ParseCancellationException;
@@ -50,6 +44,9 @@ public class FormulaParserTest {
    
    @Test
    public void testNegativeVariable() {
+      this.formula = "(-a)";
+      this.expResult = "(-a)";
+      this.doTest();
       this.formula = "(-a_b_hello)";
       this.expResult = "(-{a}_{b}_{hello})";
       this.doTest();

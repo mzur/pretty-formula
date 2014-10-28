@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 import antlr.VanesaFormulaLexer;
@@ -29,7 +23,14 @@ public class FormulaParser {
    private static final VanesaFormulaParseRules EXTRACTOR = new VanesaFormulaParseRules();
 
    private FormulaParser() { }
-   
+
+   /**
+    * 
+    * @param formula A raw formula input String.
+    * @return An image object containing the rendered formula.
+    * @throws ParseException When the formula rendering fails.
+    * @throws DetailedParseCancellationException when the formula parsing fails.
+    */
    public static BufferedImage parseToImage(String formula)
            throws ParseException, DetailedParseCancellationException {
       TeXFormula latexFormula
@@ -54,6 +55,12 @@ public class FormulaParser {
       return image;
    }
 
+   /**
+    * 
+    * @param formula A raw formula input String.
+    * @return The formula parsed to a small subset of LaTeX.
+    * @throws DetailedParseCancellationException When the parsing fails.
+    */
    public static String parseToLatex(String formula) throws DetailedParseCancellationException {
       VanesaFormulaLexer lexer = new VanesaFormulaLexer(new ANTLRInputStream(formula));
       lexer.removeErrorListeners();

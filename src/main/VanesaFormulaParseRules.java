@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 import antlr.VanesaFormulaBaseVisitor;
@@ -11,10 +5,12 @@ import antlr.VanesaFormulaParser;
 import org.antlr.v4.runtime.misc.NotNull;
 
 /**
- *
+ * ANTLR visitor that parses a VanesaFormula parse tree to a subset of LaTeX
+ * commands.
  * @author martin
  */
 public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
+   
    /**
 	 * {@inheritDoc}
 	 *
@@ -24,15 +20,17 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	@Override public String visitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) {
       return ctx.getText();
    }
+   
 	/**
 	 * {@inheritDoc}
 	 *
     * @param ctx Negative number context
-    * @return The text content of this node.
+    * @return The number wrapped in "(-" and ")".
 	 */
 	@Override public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
       return "(-" + visit(ctx.number()) + ")";
    }
+   
 	/**
 	 * {@inheritDoc}
 	 *
@@ -51,6 +49,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
          return re.substring(0, re.length() - 1);
       }
    }
+   
    /**
 	 * {@inheritDoc}
 	 *
@@ -60,11 +59,10 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	@Override public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) {
       return "(-" + visit(ctx.variable()) + ")";
    }
+   
 	/**
 	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+
     * @param ctx Term node context.
     * @return Returns the formula string of the term node (including all its children)
     * formatted according to the rules specified in this function.
@@ -88,7 +86,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
             default:
                ret = visit(ctx.term(0)) + ctx.operator.getText() + visit(ctx.term(1));
          }
-      // FUNCTIONS (must be before the term in parentheses)
+      // FUNCTIONS (must be queried before the term in parentheses)
       } else if (ctx.function() != null) {
         switch (ctx.function().getText()) {
            case "sqrt":
@@ -100,20 +98,17 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
               }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;
+           // add more custom functions here
            default:
               ret = ctx.function().getText() + "(";
-              ret = ctx.term().stream().map((term) -> visit(term) + ',').reduce(ret, String::concat);
+              ret = ctx.term().stream()
+                      .map((term) -> visit(term) + ',')
+                      .reduce(ret, String::concat);
               ret = ret.substring(0, ret.length() - 1) + ')';
               break;
         }
       // TERM IN PARENTHESES
       } else if (ctx.LPAREN() != null && ctx.RPAREN() != null) {
-         /*
-          * Usually the parentheses could be ommitted here but that would lead
-          * to falsy behaviour in cases like "(a+b)^c" which would be parsed to
-          * "a+b^{c}". Like this there are lots of parentheses in the formula
-          * but it is always correct.
-          */
          ret = "(" + visit(ctx.term(0)) + ")";
       } else {
          ret = visitChildren(ctx);

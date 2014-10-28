@@ -19,6 +19,7 @@ import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 public class GUIWindow extends javax.swing.JFrame {
    
    private final DefaultHighlightPainter errorHighlighter;
+   private final Graphics jLabel2Graphics;
 
    /**
     * Creates new form GUIWindow
@@ -26,6 +27,7 @@ public class GUIWindow extends javax.swing.JFrame {
    public GUIWindow() {
       initComponents();
       this.errorHighlighter = new DefaultHighlightPainter(Color.red);
+      this.jLabel2Graphics = this.jLabel2.getGraphics();
    }
 
    /**
@@ -93,17 +95,18 @@ public class GUIWindow extends javax.swing.JFrame {
 
    private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
       this.jLabel1.setText("");
-      Graphics g = this.jLabel2.getGraphics();
-      g.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
+      
+      this.jLabel2Graphics.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
       this.jTextPane1.getHighlighter().removeAllHighlights();
       
       try {
          BufferedImage image = FormulaParser.parseToImage(this.jTextPane1.getText());
-         g.drawImage(image, 0, 0, null);
+         this.jLabel2Graphics.drawImage(image, 0, 0, null);
          
       } catch (DetailedParseCancellationException e) {
         
          try {
+            // highlight the position at which the error occurred
             this.jTextPane1.getHighlighter().addHighlight(e.getCharPositionInLine(), e.getEndCharPositionInLine(), this.errorHighlighter);
          } catch (BadLocationException ex) {
             // simply don't highlight

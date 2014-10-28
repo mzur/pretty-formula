@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package main;
 
 /**
@@ -43,7 +37,6 @@ public class PrettyFormula {
       java.awt.EventQueue.invokeLater(() -> {
          new GUIWindow().setVisible(true);
       });
-      //System.out.println(FormulaParser.parse("(1+2*(-3)^(a+5)^5)/(c_1*(-d)-sqrt(10.5))/abs(x)*(3,1415)"));
    }
    
 }
