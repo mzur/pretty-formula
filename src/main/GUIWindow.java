@@ -18,7 +18,7 @@ import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
  */
 public class GUIWindow extends javax.swing.JFrame {
    
-   private DefaultHighlightPainter errorHighlighter;
+   private final DefaultHighlightPainter errorHighlighter;
 
    /**
     * Creates new form GUIWindow

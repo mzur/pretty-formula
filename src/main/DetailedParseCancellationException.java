@@ -32,7 +32,8 @@ public class DetailedParseCancellationException extends ParseCancellationExcepti
       this.endCharPositionInLine = this.charPositionInLine + 1;
    }
    
-   public DetailedParseCancellationException(String msg, int line, int charPositionInLine, int endCharPositionInLine) {
+   public DetailedParseCancellationException(String msg, int line,
+           int charPositionInLine, int endCharPositionInLine) {
       super(msg);
       this.line = line;
       this.charPositionInLine = charPositionInLine;

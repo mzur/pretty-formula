@@ -9,7 +9,6 @@ package main;
 import antlr.VanesaFormulaBaseVisitor;
 import antlr.VanesaFormulaParser;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  *
@@ -19,8 +18,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    /**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+    * @param ctx Number context
+    * @return The text content of this node.
 	 */
 	@Override public String visitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) {
       return ctx.getText();
@@ -28,37 +27,39 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+    * @param ctx Negative number context
+    * @return The text content of this node.
 	 */
 	@Override public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
-      return ctx.getText(); 
+      return "(-" + visit(ctx.number()) + ")";
    }
 	/**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+    * @param ctx Variable context
+    * @return The text content of this node. Subscript parts are encapsulated
+    * in curly braces.
 	 */
 	@Override public String visitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { 
       if (ctx.LODASH().isEmpty()) {
          return ctx.getText();
       } else {
          String re = "";
-         // encapsulate subscript in {} so it works for whole words, too
-         for (TerminalNode variable : ctx.VARIABLE()) {
-            re += "{" + variable.getText() + "}_";
-         }
+         re = ctx.VARIABLE().stream()
+                 .map((variable) -> "{" + variable.getText() + "}_")
+                 .reduce(re, String::concat);
          return re.substring(0, re.length() - 1);
       }
    }
    /**
 	 * {@inheritDoc}
 	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
+	 * @param ctx Negative variable context
+    * @return The variable wrapped in "(-" and ")".
 	 */
-	@Override public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) { return visitChildren(ctx); }
+	@Override public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) {
+      return "(-" + visit(ctx.variable()) + ")";
+   }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -68,7 +69,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
     * @return Returns the formula string of the term node (including all its children)
     * formatted according to the rules specified in this function.
 	 */
-	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx) throws DetailedParseCancellationException {
+	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx)
+           throws DetailedParseCancellationException {
       String ret;
       
       // OPERATORS
@@ -91,7 +93,10 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
         switch (ctx.function().getText()) {
            case "sqrt":
               if (ctx.term().size() > 1) {
-                 throw new DetailedParseCancellationException("Square root must not have multiple arguments.", ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(), ctx.getStop().getCharPositionInLine());
+                 throw new DetailedParseCancellationException("Square root must"
+                         + " not have multiple arguments.",
+                         ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),
+                         ctx.getStop().getCharPositionInLine());
               }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;

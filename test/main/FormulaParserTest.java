@@ -42,6 +42,20 @@ public class FormulaParserTest {
    }
    
    @Test
+   public void testVariable() {
+      this.formula = "a";
+      this.expResult = "a";
+      this.doTest();
+   }
+   
+   @Test
+   public void testNegativeVariable() {
+      this.formula = "(-a_b_hello)";
+      this.expResult = "(-{a}_{b}_{hello})";
+      this.doTest();
+   }
+   
+   @Test
    public void testFrac() {
       this.formula = "a/b/c";
       this.expResult = "\\frac{\\frac{a}{b}}{c}";
