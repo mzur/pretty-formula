@@ -7,7 +7,6 @@
 package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
@@ -19,7 +18,6 @@ import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 public class GUIWindow extends javax.swing.JFrame {
    
    private final DefaultHighlightPainter errorHighlighter;
-   private final Graphics jLabel2Graphics;
 
    /**
     * Creates new form GUIWindow
@@ -27,7 +25,6 @@ public class GUIWindow extends javax.swing.JFrame {
    public GUIWindow() {
       initComponents();
       this.errorHighlighter = new DefaultHighlightPainter(Color.red);
-      this.jLabel2Graphics = this.jLabel2.getGraphics();
    }
 
    /**
@@ -47,6 +44,8 @@ public class GUIWindow extends javax.swing.JFrame {
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
       jLabel1.setForeground(new java.awt.Color(176, 1, 1));
+
+      jLabel2.setBorder(null);
 
       jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
          public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -78,7 +77,7 @@ public class GUIWindow extends javax.swing.JFrame {
             .addGap(7, 7, 7)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
       );
 
@@ -96,12 +95,12 @@ public class GUIWindow extends javax.swing.JFrame {
    private void jTextPane1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPane1KeyReleased
       this.jLabel1.setText("");
       
-      this.jLabel2Graphics.clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
+      this.jLabel2.getGraphics().clearRect(0, 0, this.jLabel2.getWidth(), this.jLabel2.getHeight());
       this.jTextPane1.getHighlighter().removeAllHighlights();
-      
+
       try {
          BufferedImage image = FormulaParser.parseToImage(this.jTextPane1.getText());
-         this.jLabel2Graphics.drawImage(image, 0, 0, null);
+         this.jLabel2.getGraphics().drawImage(image, 0, 0, null);
          
       } catch (DetailedParseCancellationException e) {
         
