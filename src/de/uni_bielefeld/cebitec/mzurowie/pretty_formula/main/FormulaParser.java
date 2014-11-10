@@ -1,7 +1,7 @@
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
-import antlr.VanesaFormulaLexer;
-import antlr.VanesaFormulaParser;
+import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaLexer;
+import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaParser;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -25,6 +25,7 @@ public class FormulaParser {
    private FormulaParser() { }
 
    /**
+    * Parses a mathematical formula String like "(a+b)/c" to a pretty image.
     * 
     * @param formula A raw formula input String.
     * @return An image object containing the rendered formula.
@@ -56,6 +57,7 @@ public class FormulaParser {
    }
 
    /**
+    * Parses a mathematical formula String like "(a+b)/c" to valid math LaTeX.
     * 
     * @param formula A raw formula input String.
     * @return The formula parsed to a small subset of LaTeX.

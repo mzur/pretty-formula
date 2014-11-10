@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 import java.awt.Color;
 import java.awt.Graphics;

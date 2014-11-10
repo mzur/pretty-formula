@@ -1,4 +1,4 @@
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 /**
  *

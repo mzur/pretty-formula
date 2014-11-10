@@ -1,7 +1,7 @@
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
-import antlr.VanesaFormulaBaseVisitor;
-import antlr.VanesaFormulaParser;
+import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaBaseVisitor;
+import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaParser;
 import org.antlr.v4.runtime.misc.NotNull;
 
 /**
@@ -17,7 +17,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
     * @param ctx Number context
     * @return The text content of this node.
 	 */
-	@Override public String visitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) {
+	@Override
+   public String visitNumber(@NotNull VanesaFormulaParser.NumberContext ctx) {
       return ctx.getText();
    }
    
@@ -27,7 +28,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
     * @param ctx Negative number context
     * @return The number wrapped in "(-" and ")".
 	 */
-	@Override public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
+	@Override
+   public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
       return "(-" + visit(ctx.number()) + ")";
    }
    
@@ -38,7 +40,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
     * @return The text content of this node. Subscript parts are encapsulated
     * in curly braces.
 	 */
-	@Override public String visitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { 
+	@Override
+   public String visitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { 
       if (ctx.LODASH().isEmpty()) {
          return ctx.getText();
       } else {
@@ -56,18 +59,20 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 * @param ctx Negative variable context
     * @return The variable wrapped in "(-" and ")".
 	 */
-	@Override public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) {
+	@Override
+   public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) {
       return "(-" + visit(ctx.variable()) + ")";
    }
    
 	/**
 	 * {@inheritDoc}
-
+    * 
     * @param ctx Term node context.
     * @return Returns the formula string of the term node (including all its children)
     * formatted according to the rules specified in this function.
 	 */
-	@Override public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx)
+	@Override
+   public String visitTerm(@NotNull VanesaFormulaParser.TermContext ctx)
            throws DetailedParseCancellationException {
       String ret;
       
@@ -83,6 +88,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
             case "^":
                ret = visit(ctx.term(0)) + "^{" + visit(ctx.term(1)) + "}";
                break;
+            // add more custom operators here
             default:
                ret = visit(ctx.term(0)) + ctx.operator.getText() + visit(ctx.term(1));
          }
@@ -91,6 +97,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
         switch (ctx.function().getText()) {
            case "sqrt":
               if (ctx.term().size() > 1) {
+                 // example for throwing custom exceptions properly
                  throw new DetailedParseCancellationException("Square root must"
                          + " not have multiple arguments.",
                          ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),

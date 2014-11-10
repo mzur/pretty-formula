@@ -1,4 +1,4 @@
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 
 import org.antlr.v4.runtime.BaseErrorListener;
@@ -8,8 +8,8 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 /**
  * An ANTLR ErrorListener that throws a custom error instead of logging them
- * to the console {@link org.antlr.v4.runtime.ConsoleErrorListener} or throwing
- * a nondescriptive error {@link org.antlr.v4.runtime.BailErrorStrategy}.
+ * to the console ({@link org.antlr.v4.runtime.ConsoleErrorListener}) or throwing
+ * a non-descriptive error ({@link org.antlr.v4.runtime.BailErrorStrategy}).
  * @author martin
  */
 public class ThrowingErrorListener extends BaseErrorListener {
