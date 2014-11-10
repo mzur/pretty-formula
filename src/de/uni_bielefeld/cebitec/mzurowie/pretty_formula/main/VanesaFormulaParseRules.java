@@ -82,12 +82,15 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
             case "/":
                ret = "\\frac{" + visit(ctx.term(0)) + "}{" + visit(ctx.term(1)) + "}";
                break;
+               
             case "*":
                ret = visit(ctx.term(0)) + "\\cdot " + visit(ctx.term(1));
                break;
+               
             case "^":
                ret = visit(ctx.term(0)) + "^{" + visit(ctx.term(1)) + "}";
                break;
+               
             // add more custom operators here
             default:
                ret = visit(ctx.term(0)) + ctx.operator.getText() + visit(ctx.term(1));
@@ -98,13 +101,37 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
            case "sqrt":
               if (ctx.term().size() > 1) {
                  // example for throwing custom exceptions properly
-                 throw new DetailedParseCancellationException("Square root must"
-                         + " not have multiple arguments.",
+                 throw new DetailedParseCancellationException("Square root "
+                         + "must not have multiple arguments.",
                          ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),
                          ctx.getStop().getCharPositionInLine());
               }
               ret = "\\sqrt{" + visit(ctx.term(0)) + "}";
               break;
+              
+           case "sin":
+           case "cos":
+           case "tan":
+           case "abs":
+              if (ctx.term().size() > 1) {
+                 // example for throwing custom exceptions properly
+                 throw new DetailedParseCancellationException("'" +
+                         ctx.function().getText() + "' must not have multiple arguments.",
+                         ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),
+                         ctx.getStop().getCharPositionInLine());
+              }
+              ret = "\\" + ctx.function().getText() + "{(" + visit(ctx.term(0)) + ")}";
+              break;
+              
+           case "min":
+           case "max":
+              ret = "\\" + ctx.function().getText() + "{(";
+              ret = ctx.term().stream()
+                      .map((term) -> visit(term) + ',')
+                      .reduce(ret, String::concat);
+              ret = ret.substring(0, ret.length() - 1) + ")}";
+              break;
+              
            // add more custom functions here
            default:
               ret = ctx.function().getText() + "(";

@@ -1,7 +1,5 @@
-package main;
+package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
-import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main.FormulaParser;
-import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main.DetailedParseCancellationException;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -89,24 +87,73 @@ public class FormulaParserTest {
       this.doTest();
    }
    
-   @Test(expected = ParseCancellationException.class)
-   public void testNoViableAlternativeException() {
-      this.formula = "a+";
+   @Test
+   public void testSin() {
+      this.formula = "sin(a)";
+      this.expResult = "\\sin{(a)}";
+      this.doTest();
+   }
+   
+   @Test(expected = DetailedParseCancellationException.class)
+   public void testSinMultipleArguments() {
+      this.formula = "sin(a,b,c)";
       this.expResult = "the exception is thrown";
       this.doTest();
    }
    
-   @Test(expected = ParseCancellationException.class)
-   public void testMissingToken() {
-      this.formula = "(a+b";
+   @Test
+   public void testCos() {
+      this.formula = "cos(a)";
+      this.expResult = "\\cos{(a)}";
+      this.doTest();
+   }
+   
+   @Test(expected = DetailedParseCancellationException.class)
+   public void testCosMultipleArguments() {
+      this.formula = "cos(a,b,c)";
       this.expResult = "the exception is thrown";
       this.doTest();
    }
    
-   @Test(expected = ParseCancellationException.class)
-   public void testUnwantedToken() {
-      this.formula = "a-a)";
+   @Test
+   public void testTan() {
+      this.formula = "tan(a)";
+      this.expResult = "\\tan{(a)}";
+      this.doTest();
+   }
+   
+   @Test(expected = DetailedParseCancellationException.class)
+   public void testTanMultipleArguments() {
+      this.formula = "tan(a,b,c)";
       this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test
+   public void testAbs() {
+      this.formula = "abs(a)";
+      this.expResult = "\\abs{(a)}";
+      this.doTest();
+   }
+   
+   @Test(expected = DetailedParseCancellationException.class)
+   public void testAbsMultipleArguments() {
+      this.formula = "abs(a,b,c)";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test
+   public void testMin() {
+      this.formula = "min(a, b, c)";
+      this.expResult = "\\min{(a,b,c)}";
+      this.doTest();
+   }
+   
+   @Test
+   public void testMax() {
+      this.formula = "max(a, b, c)";
+      this.expResult = "\\max{(a,b,c)}";
       this.doTest();
    }
    
@@ -119,7 +166,7 @@ public class FormulaParserTest {
    
    @Test
    public void testFunctionMultipleParameters() {
-      this.formula = "func(a,b,c)";
+      this.formula = "func(a, b, c)";
       this.expResult = "func(a,b,c)";
       this.doTest();
    }
@@ -149,6 +196,27 @@ public class FormulaParserTest {
    public void testLodash() {
       this.formula = "a_bc_de_fg";
       this.expResult = "{a}_{bc}_{de}_{fg}";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testNoViableAlternativeException() {
+      this.formula = "a+";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testMissingToken() {
+      this.formula = "(a+b";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testUnwantedToken() {
+      this.formula = "a-a)";
+      this.expResult = "the exception is thrown";
       this.doTest();
    }
    
