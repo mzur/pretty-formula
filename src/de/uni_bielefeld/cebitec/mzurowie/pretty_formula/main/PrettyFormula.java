@@ -2,7 +2,7 @@ package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 /**
  *
- * @author martin
+ * @author Martin Zurowietz
  */
 public class PrettyFormula {
 

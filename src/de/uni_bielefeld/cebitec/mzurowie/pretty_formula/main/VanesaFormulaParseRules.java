@@ -7,12 +7,14 @@ import org.antlr.v4.runtime.misc.NotNull;
 /**
  * ANTLR visitor that parses a VanesaFormula parse tree to a subset of LaTeX
  * commands.
- * @author martin
+ * @author Martin Zurowietz
  */
 public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    
    /**
 	 * {@inheritDoc}
+    * 
+    * From a number node, the number is returned as text.
 	 *
     * @param ctx Number context
     * @return The text content of this node.
@@ -24,6 +26,8 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    
 	/**
 	 * {@inheritDoc}
+    * 
+    * From a negative number node, the negative number is returned as text.
 	 *
     * @param ctx Negative number context
     * @return The number wrapped in "(-" and ")".
@@ -35,6 +39,10 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    
 	/**
 	 * {@inheritDoc}
+    * 
+    * From a variable node, the variable is returned as text. If it has a
+    * subscript part added to it, the subscript part is recursively wrapped
+    * in curly braces, so subscript words with length > 1 are possible.
 	 *
     * @param ctx Variable context
     * @return The text content of this node. Subscript parts are encapsulated
@@ -55,6 +63,9 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    
    /**
 	 * {@inheritDoc}
+    * 
+    * From a negative variable node, the variable is returned as text, as
+    * determined by {@link #visitVariable(de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaParser.VariableContext) }.
 	 *
 	 * @param ctx Negative variable context
     * @return The variable wrapped in "(-" and ")".
@@ -66,6 +77,11 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
    
 	/**
 	 * {@inheritDoc}
+    * 
+    * The most important node visitor function. It recognizes the different
+    * kinds of terms and applies the custom formatting rules to it. This
+    * function contains examples for all possible kinds of terms as well as
+    * examples for throwing custom errors properly.
     * 
     * @param ctx Term node context.
     * @return Returns the formula string of the term node (including all its children)
@@ -114,7 +130,6 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
            case "tan":
            case "abs":
               if (ctx.term().size() > 1) {
-                 // example for throwing custom exceptions properly
                  throw new DetailedParseCancellationException("'" +
                          ctx.function().getText() + "' must not have multiple arguments.",
                          ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),

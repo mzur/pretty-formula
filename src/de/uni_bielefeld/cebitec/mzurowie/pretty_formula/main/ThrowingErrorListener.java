@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
  * An ANTLR ErrorListener that throws a custom error instead of logging them
  * to the console ({@link org.antlr.v4.runtime.ConsoleErrorListener}) or throwing
  * a non-descriptive error ({@link org.antlr.v4.runtime.BailErrorStrategy}).
- * @author martin
+ * @author Martin Zurowietz
  */
 public class ThrowingErrorListener extends BaseErrorListener {
 

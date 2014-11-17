@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 /**
  * An ANTLR parse exception that contains additional information like the
  * exact position of the character(-sequence) that produced the error.
- * @author martin
+ * @author Martin Zurowietz
  */
 public class DetailedParseCancellationException extends ParseCancellationException {
    

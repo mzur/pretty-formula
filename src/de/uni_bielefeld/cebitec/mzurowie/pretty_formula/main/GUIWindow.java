@@ -8,16 +8,22 @@ package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
+import org.scilab.forge.jlatexmath.ParseException;
 
 /**
  *
- * @author martin
+ * @author Martin Zurowietz
  */
 public class GUIWindow extends javax.swing.JFrame {
    
    private final DefaultHighlightPainter errorHighlighter;
+   
+   final JFileChooser fileChooser;
 
    /**
     * Creates new form GUIWindow
@@ -25,6 +31,8 @@ public class GUIWindow extends javax.swing.JFrame {
    public GUIWindow() {
       initComponents();
       this.errorHighlighter = new DefaultHighlightPainter(Color.red);
+      this.fileChooser = new JFileChooser();
+      this.fileChooser.setFileFilter(new FileNameExtensionFilter("SVG file", "svg", "SVG"));
    }
 
    /**
@@ -40,12 +48,11 @@ public class GUIWindow extends javax.swing.JFrame {
       jLabel2 = new javax.swing.JLabel();
       jScrollPane1 = new javax.swing.JScrollPane();
       jTextPane1 = new javax.swing.JTextPane();
+      jButton1 = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
       jLabel1.setForeground(new java.awt.Color(176, 1, 1));
-
-      jLabel2.setBorder(null);
 
       jTextPane1.addKeyListener(new java.awt.event.KeyAdapter() {
          public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -57,6 +64,13 @@ public class GUIWindow extends javax.swing.JFrame {
       });
       jScrollPane1.setViewportView(jTextPane1);
 
+      jButton1.setText("export");
+      jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            jButton1MouseClicked(evt);
+         }
+      });
+
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
       getContentPane().setLayout(layout);
       layout.setHorizontalGroup(
@@ -66,18 +80,23 @@ public class GUIWindow extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
+               .addGroup(layout.createSequentialGroup()
+                  .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(jButton1)))
             .addContainerGap())
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(7, 7, 7)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jButton1))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
             .addContainerGap())
       );
 
@@ -103,19 +122,46 @@ public class GUIWindow extends javax.swing.JFrame {
          this.jLabel2.getGraphics().drawImage(image, 0, 0, null);
          
       } catch (DetailedParseCancellationException e) {
-        
-         try {
-            // highlight the position at which the error occurred
-            this.jTextPane1.getHighlighter().addHighlight(e.getCharPositionInLine(), e.getEndCharPositionInLine(), this.errorHighlighter);
-         } catch (BadLocationException ex) {
-            // simply don't highlight
-         }
-         
+        this.handleDetailedParseCancellationException(e);
+      } catch (ParseException e) {
          this.jLabel1.setText(e.getMessage());
       }
    }//GEN-LAST:event_jTextPane1KeyReleased
 
+   private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+      int returnVal = this.fileChooser.showSaveDialog(jTextPane1);
+      
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+         try {
+            FormulaParser.saveToSVG(this.jTextPane1.getText(),
+                    this.fileChooser.getSelectedFile());
+         } catch (IOException e) {
+            this.jLabel1.setText(e.getMessage());
+         } catch (DetailedParseCancellationException e) {
+            this.handleDetailedParseCancellationException(e);
+         } catch (ParseException e) {
+            this.jLabel1.setText(e.getMessage());
+         }
+      }
+      
+      this.jLabel1.setText("saved");
+   }//GEN-LAST:event_jButton1MouseClicked
+
+   private void handleDetailedParseCancellationException(
+           DetailedParseCancellationException e) {
+      try {
+         // highlight the position at which the error occurred
+         this.jTextPane1.getHighlighter().addHighlight(
+                 e.getCharPositionInLine(), e.getEndCharPositionInLine(),
+                 this.errorHighlighter);
+      } catch (BadLocationException ex) {
+         // simply don't highlight
+      }
+
+      this.jLabel1.setText(e.getMessage());
+   }
    // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JScrollPane jScrollPane1;
