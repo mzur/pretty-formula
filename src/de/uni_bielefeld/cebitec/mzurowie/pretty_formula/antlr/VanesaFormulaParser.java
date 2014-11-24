@@ -1,4 +1,4 @@
-// Generated from /media/martin/data/uni/ws1415/pretty-formula/src/antlr/VanesaFormula.g4 by ANTLR 4.4
+// Generated from /media/martin/data/uni/ws1415/pretty-formula/src/de/uni_bielefeld/cebitec/mzurowie/pretty_formula/antlr/VanesaFormula.g4 by ANTLR 4.4
 package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -17,11 +17,11 @@ public class VanesaFormulaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		PLUS=1, MINUS=2, MULT=3, DIV=4, POW=5, LODASH=6, LPAREN=7, RPAREN=8, COMMA=9, 
-		NUMBER=10, VARIABLE=11, WS=12, DIGIT=13, CHAR=14;
+		VARIABLE=1, WS=2, DIGIT=3, CHAR=4, PLUS=5, MINUS=6, MULT=7, DIV=8, POW=9, 
+		LODASH=10, LPAREN=11, RPAREN=12, COMMA=13, DOT=14;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'+'", "'-'", "'*'", "'/'", "'^'", "'_'", "'('", "')'", "','", 
-		"NUMBER", "VARIABLE", "WS", "DIGIT", "CHAR"
+		"<INVALID>", "VARIABLE", "WS", "DIGIT", "CHAR", "'+'", "'-'", "'*'", "'/'", 
+		"'^'", "'_'", "'('", "')'", "','", "'.'"
 	};
 	public static final int
 		RULE_expr = 0, RULE_term = 1, RULE_atom = 2, RULE_number = 3, RULE_neg_number = 4, 
@@ -319,7 +319,12 @@ public class VanesaFormulaParser extends Parser {
 	}
 
 	public static class NumberContext extends ParserRuleContext {
-		public TerminalNode NUMBER() { return getToken(VanesaFormulaParser.NUMBER, 0); }
+		public TerminalNode DOT() { return getToken(VanesaFormulaParser.DOT, 0); }
+		public TerminalNode DIGIT(int i) {
+			return getToken(VanesaFormulaParser.DIGIT, i);
+		}
+		public TerminalNode COMMA() { return getToken(VanesaFormulaParser.COMMA, 0); }
+		public List<TerminalNode> DIGIT() { return getTokens(VanesaFormulaParser.DIGIT); }
 		public NumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -334,10 +339,62 @@ public class VanesaFormulaParser extends Parser {
 	public final NumberContext number() throws RecognitionException {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_number);
+		int _la;
 		try {
+			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(61); match(NUMBER);
+			setState(62); 
+			_errHandler.sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					setState(61); match(DIGIT);
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				setState(64); 
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			setState(72);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				{
+				setState(66);
+				_la = _input.LA(1);
+				if ( !(_la==COMMA || _la==DOT) ) {
+				_errHandler.recoverInline(this);
+				}
+				consume();
+				setState(68); 
+				_errHandler.sync(this);
+				_alt = 1;
+				do {
+					switch (_alt) {
+					case 1:
+						{
+						{
+						setState(67); match(DIGIT);
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+					}
+					setState(70); 
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				}
+				break;
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -375,10 +432,10 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63); match(LPAREN);
-			setState(64); match(MINUS);
-			setState(65); number();
-			setState(66); match(RPAREN);
+			setState(74); match(LPAREN);
+			setState(75); match(MINUS);
+			setState(76); number();
+			setState(77); match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -419,22 +476,22 @@ public class VanesaFormulaParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(68); match(VARIABLE);
-			setState(73);
+			setState(79); match(VARIABLE);
+			setState(84);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(69); match(LODASH);
-					setState(70); match(VARIABLE);
+					setState(80); match(LODASH);
+					setState(81); match(VARIABLE);
 					}
 					} 
 				}
-				setState(75);
+				setState(86);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
 			}
 		}
@@ -473,10 +530,10 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(76); match(LPAREN);
-			setState(77); match(MINUS);
-			setState(78); variable();
-			setState(79); match(RPAREN);
+			setState(87); match(LPAREN);
+			setState(88); match(MINUS);
+			setState(89); variable();
+			setState(90); match(RPAREN);
 			}
 		}
 		catch (RecognitionException re) {
@@ -509,7 +566,7 @@ public class VanesaFormulaParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81); match(VARIABLE);
+			setState(92); match(VARIABLE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -540,27 +597,30 @@ public class VanesaFormulaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20V\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\20a\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3 \n\3\f\3\16\3#\13\3\3\3\3\3\5\3\'"+
 		"\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\65\n\3\f\3\16"+
-		"\38\13\3\3\4\3\4\3\4\3\4\5\4>\n\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7"+
-		"\3\7\7\7J\n\7\f\7\16\7M\13\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\3\4\n\2"+
-		"\4\6\b\n\f\16\20\2\3\3\2\3\4X\2\22\3\2\2\2\4&\3\2\2\2\6=\3\2\2\2\b?\3"+
-		"\2\2\2\nA\3\2\2\2\fF\3\2\2\2\16N\3\2\2\2\20S\3\2\2\2\22\23\5\4\3\2\23"+
-		"\3\3\2\2\2\24\25\b\3\1\2\25\26\7\t\2\2\26\27\5\4\3\2\27\30\7\n\2\2\30"+
-		"\'\3\2\2\2\31\'\5\6\4\2\32\33\5\20\t\2\33\34\7\t\2\2\34!\5\4\3\2\35\36"+
-		"\7\13\2\2\36 \5\4\3\2\37\35\3\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\""+
-		"$\3\2\2\2#!\3\2\2\2$%\7\n\2\2%\'\3\2\2\2&\24\3\2\2\2&\31\3\2\2\2&\32\3"+
-		"\2\2\2\'\66\3\2\2\2()\f\6\2\2)*\7\7\2\2*\65\5\4\3\7+,\f\5\2\2,-\7\6\2"+
-		"\2-\65\5\4\3\6./\f\4\2\2/\60\7\5\2\2\60\65\5\4\3\5\61\62\f\3\2\2\62\63"+
-		"\t\2\2\2\63\65\5\4\3\4\64(\3\2\2\2\64+\3\2\2\2\64.\3\2\2\2\64\61\3\2\2"+
-		"\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67\5\3\2\2\28\66\3\2\2\29>"+
-		"\5\b\5\2:>\5\n\6\2;>\5\f\7\2<>\5\16\b\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2"+
-		"=<\3\2\2\2>\7\3\2\2\2?@\7\f\2\2@\t\3\2\2\2AB\7\t\2\2BC\7\4\2\2CD\5\b\5"+
-		"\2DE\7\n\2\2E\13\3\2\2\2FK\7\r\2\2GH\7\b\2\2HJ\7\r\2\2IG\3\2\2\2JM\3\2"+
-		"\2\2KI\3\2\2\2KL\3\2\2\2L\r\3\2\2\2MK\3\2\2\2NO\7\t\2\2OP\7\4\2\2PQ\5"+
-		"\f\7\2QR\7\n\2\2R\17\3\2\2\2ST\7\r\2\2T\21\3\2\2\2\b!&\64\66=K";
+		"\38\13\3\3\4\3\4\3\4\3\4\5\4>\n\4\3\5\6\5A\n\5\r\5\16\5B\3\5\3\5\6\5G"+
+		"\n\5\r\5\16\5H\5\5K\n\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\7\7U\n\7\f\7\16"+
+		"\7X\13\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\2\3\4\n\2\4\6\b\n\f\16\20\2\4"+
+		"\3\2\7\b\3\2\17\20f\2\22\3\2\2\2\4&\3\2\2\2\6=\3\2\2\2\b@\3\2\2\2\nL\3"+
+		"\2\2\2\fQ\3\2\2\2\16Y\3\2\2\2\20^\3\2\2\2\22\23\5\4\3\2\23\3\3\2\2\2\24"+
+		"\25\b\3\1\2\25\26\7\r\2\2\26\27\5\4\3\2\27\30\7\16\2\2\30\'\3\2\2\2\31"+
+		"\'\5\6\4\2\32\33\5\20\t\2\33\34\7\r\2\2\34!\5\4\3\2\35\36\7\17\2\2\36"+
+		" \5\4\3\2\37\35\3\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"$\3\2\2\2#!"+
+		"\3\2\2\2$%\7\16\2\2%\'\3\2\2\2&\24\3\2\2\2&\31\3\2\2\2&\32\3\2\2\2\'\66"+
+		"\3\2\2\2()\f\6\2\2)*\7\13\2\2*\65\5\4\3\7+,\f\5\2\2,-\7\n\2\2-\65\5\4"+
+		"\3\6./\f\4\2\2/\60\7\t\2\2\60\65\5\4\3\5\61\62\f\3\2\2\62\63\t\2\2\2\63"+
+		"\65\5\4\3\4\64(\3\2\2\2\64+\3\2\2\2\64.\3\2\2\2\64\61\3\2\2\2\658\3\2"+
+		"\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67\5\3\2\2\28\66\3\2\2\29>\5\b\5\2:>"+
+		"\5\n\6\2;>\5\f\7\2<>\5\16\b\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2=<\3\2\2\2"+
+		">\7\3\2\2\2?A\7\5\2\2@?\3\2\2\2AB\3\2\2\2B@\3\2\2\2BC\3\2\2\2CJ\3\2\2"+
+		"\2DF\t\3\2\2EG\7\5\2\2FE\3\2\2\2GH\3\2\2\2HF\3\2\2\2HI\3\2\2\2IK\3\2\2"+
+		"\2JD\3\2\2\2JK\3\2\2\2K\t\3\2\2\2LM\7\r\2\2MN\7\b\2\2NO\5\b\5\2OP\7\16"+
+		"\2\2P\13\3\2\2\2QV\7\3\2\2RS\7\f\2\2SU\7\3\2\2TR\3\2\2\2UX\3\2\2\2VT\3"+
+		"\2\2\2VW\3\2\2\2W\r\3\2\2\2XV\3\2\2\2YZ\7\r\2\2Z[\7\b\2\2[\\\5\f\7\2\\"+
+		"]\7\16\2\2]\17\3\2\2\2^_\7\3\2\2_\21\3\2\2\2\13!&\64\66=BHJV";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

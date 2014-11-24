@@ -1,15 +1,5 @@
 grammar VanesaFormula;
 
-PLUS   : '+' ;
-MINUS  : '-' ;
-MULT   : '*' ;
-DIV    : '/' ;
-POW    : '^' ;
-LODASH : '_' ;
-LPAREN : '(' ;
-RPAREN : ')' ;
-COMMA  : ',' ;
-
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
@@ -32,7 +22,7 @@ atom           : number
                | neg_variable
                ;           
 
-number			: NUMBER ;
+number			: ( DIGIT )+ ( ( DOT | COMMA ) ( DIGIT )+ )? ;
 
 neg_number		: LPAREN MINUS number RPAREN ;
 
@@ -41,17 +31,26 @@ variable			: VARIABLE ( LODASH VARIABLE )*;
 neg_variable	: LPAREN MINUS variable RPAREN ;
 
 function       : VARIABLE ;
- 
+
 /*------------------------------------------------------------------
  * LEXER RULES
  *------------------------------------------------------------------*/
- 
-NUMBER   : ( DIGIT )+ ( ( '.' | ',' ) ( DIGIT )+ )? ;
 
 VARIABLE : ( CHAR )+ ;
 
 WS       : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
- 
+
 DIGIT    : [0-9] ;
 
 CHAR     : [a-zA-Z0-9] ;
+
+PLUS     : '+' ;
+MINUS    : '-' ;
+MULT     : '*' ;
+DIV      : '/' ;
+POW      : '^' ;
+LODASH   : '_' ;
+LPAREN   : '(' ;
+RPAREN   : ')' ;
+COMMA    : ',' ;
+DOT      : '.' ;
