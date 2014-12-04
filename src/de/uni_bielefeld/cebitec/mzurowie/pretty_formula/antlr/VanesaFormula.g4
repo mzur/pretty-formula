@@ -22,11 +22,11 @@ atom           : number
                | neg_variable
                ;           
 
-number			: ( DIGIT )+ ( ( DOT | COMMA ) ( DIGIT )+ )? ;
+number			: NUMBER ( COMMA NUMBER )? ;
 
 neg_number		: LPAREN MINUS number RPAREN ;
 
-variable			: VARIABLE ( LODASH VARIABLE )*;
+variable			: VARIABLE ( INDEX )*;
 
 neg_variable	: LPAREN MINUS variable RPAREN ;
 
@@ -36,13 +36,17 @@ function       : VARIABLE ;
  * LEXER RULES
  *------------------------------------------------------------------*/
 
-VARIABLE : ( CHAR )+ ;
+INDEX    : LODASH ( VARIABLE | NUMBER ) ;
+
+VARIABLE : CHAR ( CHAR | DIGIT )* ;
+
+NUMBER   : ( DIGIT )+ ;
 
 WS       : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
 DIGIT    : [0-9] ;
 
-CHAR     : [a-zA-Z0-9] ;
+CHAR     : [a-zA-Z] ;
 
 PLUS     : '+' ;
 MINUS    : '-' ;
@@ -53,4 +57,3 @@ LODASH   : '_' ;
 LPAREN   : '(' ;
 RPAREN   : ')' ;
 COMMA    : ',' ;
-DOT      : '.' ;

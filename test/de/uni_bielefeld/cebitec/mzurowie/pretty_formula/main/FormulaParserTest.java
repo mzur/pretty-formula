@@ -36,6 +36,26 @@ public class FormulaParserTest {
    }
    
    @Test
+   public void testNumber() {
+      this.formula = "1";
+      this.expResult = "1";
+      this.doTest();
+      this.formula = "1,5";
+      this.expResult = "1,5";
+      this.doTest();
+   }
+   
+   @Test
+   public void testNegativeNumber() {
+      this.formula = "(-1)";
+      this.expResult = "\\left(-1\\right)";
+      this.doTest();
+      this.formula = "(-1,5)";
+      this.expResult = "\\left(-1,5\\right)";
+      this.doTest();
+   }
+   
+   @Test
    public void testVariable() {
       this.formula = "a";
       this.expResult = "a";
@@ -45,10 +65,10 @@ public class FormulaParserTest {
    @Test
    public void testNegativeVariable() {
       this.formula = "(-a)";
-      this.expResult = "(-a)";
+      this.expResult = "\\left(-a\\right)";
       this.doTest();
       this.formula = "(-a_b_hello)";
-      this.expResult = "(-{a_{b_{hello}}})";
+      this.expResult = "\\left(-{a_{b_{hello}}}\\right)";
       this.doTest();
    }
    
@@ -90,7 +110,7 @@ public class FormulaParserTest {
    @Test
    public void testSin() {
       this.formula = "sin(a)";
-      this.expResult = "\\sin{(a)}";
+      this.expResult = "\\sin{\\left(a\\right)}";
       this.doTest();
    }
    
@@ -104,7 +124,7 @@ public class FormulaParserTest {
    @Test
    public void testCos() {
       this.formula = "cos(a)";
-      this.expResult = "\\cos{(a)}";
+      this.expResult = "\\cos{\\left(a\\right)}";
       this.doTest();
    }
    
@@ -118,7 +138,7 @@ public class FormulaParserTest {
    @Test
    public void testTan() {
       this.formula = "tan(a)";
-      this.expResult = "\\tan{(a)}";
+      this.expResult = "\\tan{\\left(a\\right)}";
       this.doTest();
    }
    
@@ -132,7 +152,7 @@ public class FormulaParserTest {
    @Test
    public void testAbs() {
       this.formula = "abs(a)";
-      this.expResult = "\\abs{(a)}";
+      this.expResult = "\\abs{\\left(a\\right)}";
       this.doTest();
    }
    
@@ -146,28 +166,28 @@ public class FormulaParserTest {
    @Test
    public void testMin() {
       this.formula = "min(a, b, c)";
-      this.expResult = "\\min{(a,b,c)}";
+      this.expResult = "\\min{\\left(a,b,c\\right)}";
       this.doTest();
    }
    
    @Test
    public void testMax() {
       this.formula = "max(a, b, c)";
-      this.expResult = "\\max{(a,b,c)}";
+      this.expResult = "\\max{\\left(a,b,c\\right)}";
       this.doTest();
    }
    
    @Test
    public void testFunction() {
       this.formula = "func(a)";
-      this.expResult = "func(a)";
+      this.expResult = "func\\left(a\\right)";
       this.doTest();
    }
    
    @Test
    public void testFunctionMultipleParameters() {
       this.formula = "func(a, b, c)";
-      this.expResult = "func(a,b,c)";
+      this.expResult = "func\\left(a,b,c\\right)";
       this.doTest();
    }
    

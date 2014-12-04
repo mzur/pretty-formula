@@ -35,7 +35,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 */
 	@Override
    public String visitNeg_number(@NotNull VanesaFormulaParser.Neg_numberContext ctx) { 
-      return "(-" + visit(ctx.number()) + ")";
+      return "\\left(-" + visit(ctx.number()) + "\\right)";
    }
    
 	/**
@@ -51,16 +51,19 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 */
 	@Override
    public String visitVariable(@NotNull VanesaFormulaParser.VariableContext ctx) { 
-      if (ctx.LODASH().isEmpty()) {
-         return ctx.getText();
-      } else {
-         String left = "", right = "";
-         for (TerminalNode variable : ctx.VARIABLE()) {
-            left += "{" + variable.getText() + "_";
+      String left = ctx.VARIABLE().getText();
+      String right = "";
+      
+      if (!ctx.INDEX().isEmpty()) {         
+         left = "{" + left + "_";
+         right = "}";
+         for (TerminalNode index : ctx.INDEX()) {
+            left += "{" + index.getText().substring(1) + "_";
             right += "}";
          }
-         return left.substring(0, left.length() - 1).concat(right);
+         left = left.substring(0, left.length() - 1);
       }
+      return left.concat(right);
    }
    
    /**
@@ -74,7 +77,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
 	 */
 	@Override
    public String visitNeg_variable(@NotNull VanesaFormulaParser.Neg_variableContext ctx) {
-      return "(-" + visit(ctx.variable()) + ")";
+      return "\\left(-" + visit(ctx.variable()) + "\\right)";
    }
    
 	/**
@@ -137,30 +140,30 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
                          ctx.getStart().getLine(), ctx.getStart().getCharPositionInLine(),
                          ctx.getStop().getCharPositionInLine());
               }
-              ret = "\\" + ctx.function().getText() + "{(" + visit(ctx.term(0)) + ")}";
+              ret = "\\" + ctx.function().getText() + "{\\left(" + visit(ctx.term(0)) + "\\right)}";
               break;
               
            case "min":
            case "max":
-              ret = "\\" + ctx.function().getText() + "{(";
+              ret = "\\" + ctx.function().getText() + "{\\left(";
               ret = ctx.term().stream()
                       .map((term) -> visit(term) + ',')
                       .reduce(ret, String::concat);
-              ret = ret.substring(0, ret.length() - 1) + ")}";
+              ret = ret.substring(0, ret.length() - 1) + "\\right)}";
               break;
               
            // add more custom functions here
            default:
-              ret = ctx.function().getText() + "(";
+              ret = ctx.function().getText() + "\\left(";
               ret = ctx.term().stream()
                       .map((term) -> visit(term) + ',')
                       .reduce(ret, String::concat);
-              ret = ret.substring(0, ret.length() - 1) + ')';
+              ret = ret.substring(0, ret.length() - 1) + "\\right)";
               break;
         }
       // TERM IN PARENTHESES
       } else if (ctx.LPAREN() != null && ctx.RPAREN() != null) {
-         ret = "(" + visit(ctx.term(0)) + ")";
+         ret = "\\left(" + visit(ctx.term(0)) + "\\right)";
       } else {
          ret = visitChildren(ctx);
       }
