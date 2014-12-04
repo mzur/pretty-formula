@@ -68,7 +68,7 @@ public class FormulaParserTest {
       this.expResult = "\\left(-a\\right)";
       this.doTest();
       this.formula = "(-a_b_hello)";
-      this.expResult = "\\left(-{a_{b_{hello}}}\\right)";
+      this.expResult = "\\left(-{a}_{b_{hello}}\\right)";
       this.doTest();
    }
    
@@ -215,10 +215,10 @@ public class FormulaParserTest {
    @Test
    public void testLodash() {
       this.formula = "a_bc_de_fg";
-      this.expResult = "{a_{bc_{de_{fg}}}}";
+      this.expResult = "{a}_{bc_{de_{fg}}}";
       this.doTest();
       this.formula = "a_1";
-      this.expResult = "{a_{1}}";
+      this.expResult = "{a}_{1}";
       this.doTest();
    }
    

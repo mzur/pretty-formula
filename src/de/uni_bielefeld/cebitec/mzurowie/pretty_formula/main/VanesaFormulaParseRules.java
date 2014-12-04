@@ -55,8 +55,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
       String right = "";
       
       if (!ctx.INDEX().isEmpty()) {         
-         left = "{" + left + "_";
-         right = "}";
+         left = "{" + left + "}_";
          for (TerminalNode index : ctx.INDEX()) {
             left += "{" + index.getText().substring(1) + "_";
             right += "}";
