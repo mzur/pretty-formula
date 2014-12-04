@@ -3,6 +3,7 @@ package de.uni_bielefeld.cebitec.mzurowie.pretty_formula.main;
 import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaBaseVisitor;
 import de.uni_bielefeld.cebitec.mzurowie.pretty_formula.antlr.VanesaFormulaParser;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  * ANTLR visitor that parses a VanesaFormula parse tree to a subset of LaTeX
@@ -53,11 +54,12 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
       if (ctx.LODASH().isEmpty()) {
          return ctx.getText();
       } else {
-         String re = "";
-         re = ctx.VARIABLE().stream()
-                 .map((variable) -> "{" + variable.getText() + "}_")
-                 .reduce(re, String::concat);
-         return re.substring(0, re.length() - 1);
+         String left = "", right = "";
+         for (TerminalNode variable : ctx.VARIABLE()) {
+            left += "{" + variable.getText() + "_";
+            right += "}";
+         }
+         return left.substring(0, left.length() - 1).concat(right);
       }
    }
    

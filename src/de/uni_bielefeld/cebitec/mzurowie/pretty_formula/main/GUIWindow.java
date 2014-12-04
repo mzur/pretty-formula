@@ -24,7 +24,7 @@ public class GUIWindow extends javax.swing.JFrame {
    private final DefaultHighlightPainter errorHighlighter;
    
    final JFileChooser fileChooser;
-
+   
    /**
     * Creates new form GUIWindow
     */
@@ -135,12 +135,10 @@ public class GUIWindow extends javax.swing.JFrame {
          try {
             FormulaParser.saveToSVG(this.jTextPane1.getText(),
                     this.fileChooser.getSelectedFile());
-         } catch (IOException e) {
+         } catch (IOException | ParseException e) {
             this.jLabel1.setText(e.getMessage());
          } catch (DetailedParseCancellationException e) {
             this.handleDetailedParseCancellationException(e);
-         } catch (ParseException e) {
-            this.jLabel1.setText(e.getMessage());
          }
       }
       
