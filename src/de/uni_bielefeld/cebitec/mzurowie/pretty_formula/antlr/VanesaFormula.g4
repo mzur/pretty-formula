@@ -23,7 +23,7 @@ atom           : number
                | neg_variable
                ;           
 
-number			: NUMBER ( COMMA NUMBER )? ;
+number			: NUMBER ( DOT NUMBER )? ;
 
 neg_number		: LPAREN MINUS number RPAREN ;
 
@@ -58,3 +58,4 @@ LODASH   : '_' ;
 LPAREN   : '(' ;
 RPAREN   : ')' ;
 COMMA    : ',' ;
+DOT      : '.' ;

@@ -40,8 +40,8 @@ public class FormulaParserTest {
       this.formula = "1";
       this.expResult = "1";
       this.doTest();
-      this.formula = "1,5";
-      this.expResult = "1,5";
+      this.formula = "1.5";
+      this.expResult = "1.5";
       this.doTest();
    }
    
@@ -50,8 +50,8 @@ public class FormulaParserTest {
       this.formula = "(-1)";
       this.expResult = "\\left(-1\\right)";
       this.doTest();
-      this.formula = "(-1,5)";
-      this.expResult = "\\left(-1,5\\right)";
+      this.formula = "(-1.5)";
+      this.expResult = "\\left(-1.5\\right)";
       this.doTest();
    }
    
@@ -246,6 +246,16 @@ public class FormulaParserTest {
    @Test(expected = ParseCancellationException.class)
    public void testExtraneousInput() {
       this.formula = "1_a";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testMismatchedInput() {
+      this.formula = "1,1";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+      this.formula = "1.1.1";
       this.expResult = "the exception is thrown";
       this.doTest();
    }

@@ -1,6 +1,7 @@
 COMMA=15
 NUMBER=3
 LPAREN=13
+DOT=16
 CHAR=6
 RPAREN=14
 DIGIT=5
@@ -14,6 +15,7 @@ WS=4
 LODASH=12
 PLUS=7
 '^'=11
+'.'=16
 '-'=8
 ','=15
 '+'=7

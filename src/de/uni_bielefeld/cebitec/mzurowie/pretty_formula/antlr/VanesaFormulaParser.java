@@ -18,10 +18,10 @@ public class VanesaFormulaParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		INDEX=1, VARIABLE=2, NUMBER=3, WS=4, DIGIT=5, CHAR=6, PLUS=7, MINUS=8, 
-		MULT=9, DIV=10, POW=11, LODASH=12, LPAREN=13, RPAREN=14, COMMA=15;
+		MULT=9, DIV=10, POW=11, LODASH=12, LPAREN=13, RPAREN=14, COMMA=15, DOT=16;
 	public static final String[] tokenNames = {
 		"<INVALID>", "INDEX", "VARIABLE", "NUMBER", "WS", "DIGIT", "CHAR", "'+'", 
-		"'-'", "'*'", "'/'", "'^'", "'_'", "'('", "')'", "','"
+		"'-'", "'*'", "'/'", "'^'", "'_'", "'('", "')'", "','", "'.'"
 	};
 	public static final int
 		RULE_expr = 0, RULE_term = 1, RULE_atom = 2, RULE_number = 3, RULE_neg_number = 4, 
@@ -322,7 +322,7 @@ public class VanesaFormulaParser extends Parser {
 		public TerminalNode NUMBER(int i) {
 			return getToken(VanesaFormulaParser.NUMBER, i);
 		}
-		public TerminalNode COMMA() { return getToken(VanesaFormulaParser.COMMA, 0); }
+		public TerminalNode DOT() { return getToken(VanesaFormulaParser.DOT, 0); }
 		public List<TerminalNode> NUMBER() { return getTokens(VanesaFormulaParser.NUMBER); }
 		public NumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -346,7 +346,7 @@ public class VanesaFormulaParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
-				setState(62); match(COMMA);
+				setState(62); match(DOT);
 				setState(63); match(NUMBER);
 				}
 				break;
@@ -549,7 +549,7 @@ public class VanesaFormulaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\21X\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\22X\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3 \n\3\f\3\16\3#\13\3\3\3\3\3\5\3\'"+
 		"\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\65\n\3\f\3\16"+
@@ -566,7 +566,7 @@ public class VanesaFormulaParser extends Parser {
 		"\3\2\2\62\63\t\2\2\2\63\65\5\4\3\4\64(\3\2\2\2\64+\3\2\2\2\64.\3\2\2\2"+
 		"\64\61\3\2\2\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67\5\3\2\2\28\66"+
 		"\3\2\2\29>\5\b\5\2:>\5\n\6\2;>\5\f\7\2<>\5\16\b\2=9\3\2\2\2=:\3\2\2\2"+
-		"=;\3\2\2\2=<\3\2\2\2>\7\3\2\2\2?B\7\5\2\2@A\7\21\2\2AC\7\5\2\2B@\3\2\2"+
+		"=;\3\2\2\2=<\3\2\2\2>\7\3\2\2\2?B\7\5\2\2@A\7\22\2\2AC\7\5\2\2B@\3\2\2"+
 		"\2BC\3\2\2\2C\t\3\2\2\2DE\7\17\2\2EF\7\n\2\2FG\5\b\5\2GH\7\20\2\2H\13"+
 		"\3\2\2\2IM\7\4\2\2JL\7\3\2\2KJ\3\2\2\2LO\3\2\2\2MK\3\2\2\2MN\3\2\2\2N"+
 		"\r\3\2\2\2OM\3\2\2\2PQ\7\17\2\2QR\7\n\2\2RS\5\f\7\2ST\7\20\2\2T\17\3\2"+
