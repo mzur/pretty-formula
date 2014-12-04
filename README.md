@@ -6,7 +6,7 @@ A small Java library to parse mathematical formulas to LaTeX and display them as
 (a_1 / (b_1 + sqrt(c))^2) + sin(a_2 * b_2)
 ```
 
-![example](example.svg?raw=true)
+![example](example.png?raw=true)
 
 ## Installation
 
