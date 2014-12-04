@@ -88,8 +88,8 @@ public class FormulaParserTest {
    
    @Test
    public void testPow() {
-      this.formula = "a^b^c";
-      this.expResult = "a^{b}^{c}";
+      this.formula = "ab^bc^cd";
+      this.expResult = "{ab}^{{bc}^{cd}}";
       this.doTest();
    }
    
@@ -200,8 +200,8 @@ public class FormulaParserTest {
    
    @Test
    public void testPriorityFracPow() {
-      this.formula = "a/b^c";
-      this.expResult = "\\frac{a}{b^{c}}";
+      this.formula = "a/bc^cd";
+      this.expResult = "\\frac{a}{{bc}^{cd}}";
       this.doTest();
    }
    
@@ -217,8 +217,8 @@ public class FormulaParserTest {
       this.formula = "a_bc_de_fg";
       this.expResult = "{a}_{bc_{de_{fg}}}";
       this.doTest();
-      this.formula = "a_1";
-      this.expResult = "{a}_{1}";
+      this.formula = "a_1_b";
+      this.expResult = "{a}_{1_{b}}";
       this.doTest();
    }
    
@@ -239,6 +239,13 @@ public class FormulaParserTest {
    @Test(expected = ParseCancellationException.class)
    public void testUnwantedToken() {
       this.formula = "a-a)";
+      this.expResult = "the exception is thrown";
+      this.doTest();
+   }
+   
+   @Test(expected = ParseCancellationException.class)
+   public void testExtraneousInput() {
+      this.formula = "1_a";
       this.expResult = "the exception is thrown";
       this.doTest();
    }

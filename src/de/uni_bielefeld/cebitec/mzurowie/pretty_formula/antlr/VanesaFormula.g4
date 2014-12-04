@@ -10,7 +10,8 @@ term				: LPAREN term RPAREN
 					| atom
 					| function LPAREN term ( COMMA term )* RPAREN
                // ordering is important for correct parsing!
-               | term operator=POW term
+               // pow needs to be right associative for correct parenthesizing
+               |<assoc=right> term operator=POW term
                | term operator=DIV term
                | term operator=MULT term
 					| term operator=( PLUS | MINUS ) term

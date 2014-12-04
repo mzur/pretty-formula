@@ -108,7 +108,7 @@ public class VanesaFormulaParseRules extends VanesaFormulaBaseVisitor<String> {
                break;
                
             case "^":
-               ret = visit(ctx.term(0)) + "^{" + visit(ctx.term(1)) + "}";
+               ret = "{" + visit(ctx.term(0)) + "}^{" + visit(ctx.term(1)) + "}";
                break;
                
             // add more custom operators here
