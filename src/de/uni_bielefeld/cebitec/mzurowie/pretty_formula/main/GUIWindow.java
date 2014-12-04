@@ -119,7 +119,6 @@ public class GUIWindow extends javax.swing.JFrame {
 
       try {
          BufferedImage image = FormulaParser.parseToImage(this.jTextPane1.getText());
-         System.out.println(FormulaParser.parseToLatex(this.jTextPane1.getText()));
          this.jLabel2.getGraphics().drawImage(image, 0, 0, null);
          
       } catch (DetailedParseCancellationException e) {
