@@ -1,15 +1,18 @@
 # pretty-formula
 
-A small Java library to parse mathematical formulas to LaTeX and display them as images
+A small Java library to parse mathematical formulas to LaTeX and display them as images.
 
 Formula:
+
 ```
 (a_1 / (b_1 + sqrt(c))^2) + sin(a_2 * b_2)
 ```
 Image:
+
 ![example](example.png?raw=true)
 
 LaTeX:
+
 ```latex
 \left(\frac{{a}_{1}}{{\left({b}_{1}+\sqrt{c}\right)}^{2}}\right)+\sin{\left({a}_{2}\cdot {b}_{2}\right)}
 ```
