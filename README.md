@@ -6,11 +6,11 @@ A small Java library to parse mathematical formulas to LaTeX and display them as
 (a_1 / (b_1 + sqrt(c))^2) + sin(a_2 * b_2)
 ```
 
-![example](example.svg)
+![example](example.svg?raw=true)
 
 ## Installation
 
-Grab the [latest release](/mzur/pretty-formula/releases) and add the `pretty-formula.jar` as well as all the dependencies from the `lib` directory to your project.
+Grab the latest release and add the `pretty-formula.jar` as well as all the dependencies from the `lib` directory to your project.
 
 ## Usage
 
